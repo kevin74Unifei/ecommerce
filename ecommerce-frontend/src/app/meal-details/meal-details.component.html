@@ -1,0 +1,70 @@
+
+<div class="container-fluid content-inner-pages">
+    <div class="row">
+        <div class="col-sm-12 col-md-4">
+            <img class="img-fluid z-depth-2 rounded" [src]="getImage(meal.id, meal.images[0])" [alt]="meal.name">
+        </div>
+        <div class="col-sm-12 col-md-4">
+            <img class="img-fluid z-depth-2 rounded" [src]="getImage(meal.id, meal.images[1])" [alt]="meal.name">
+        </div>
+        <div class="col-sm-12 col-md-4">
+            <img class="img-fluid z-depth-2 rounded" [src]="getImage(meal.id, meal.images[2])" [alt]="meal.name">
+        </div>
+    </div>
+</div>
+<div class="container text-center">
+    <div class="row d-flex justify-content-center">
+        <div class="col-sm-12 col-md-8">
+            <div class="card z-depth-3">
+                <div class="card-body">            
+                    <h4 class="card-title">
+                        <a class="activator waves-effect waves-light mr-4"><i class="fas fa-utensils"></i></a>
+                        {{meal.name}}
+                    </h4>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-12 col-md-6">
+                            <p class="card-text">
+                                {{meal.description}}
+                            </p>
+                        </div>
+                        <div class="col-sm-12 col-md-3">
+                            <p class="card-text">
+                                <strong>Expiration: </strong>{{meal.daysToExpire}} days
+                            </p>
+                        </div>
+                        <div class="col-sm-12 col-md-3">
+                            <p class="card-text">
+                                <strong>Amount available:</strong> {{meal.amount}}
+                            </p>
+                        </div>
+                    </div>            
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-4">
+            <form (ngSubmit)="addToCart()" [formGroup]="form">            
+                <div class="card z-depth-3" style="height: 100%;">
+                    <div class="card-body">        
+                        <div class="row d-flex align-items-center">
+                            <div class="col-3">
+                                <h4 class="text-success text-center">{{meal.price * amount.value}}$</h4>
+                            </div>
+                            <div class="col-3">
+                                <div class="md-form">
+                                    <input mdbInput mdbValidate formControlName="amount" type="number" class="form-control" id="amount">
+                                    <label for="amount">Amount</label>
+                                    <mdb-error *ngIf="amount.invalid && (amount.dirty || amount.touched)">Amount Invalid</mdb-error>
+                                    <mdb-success *ngIf="amount.valid && (amount.dirty || amount.touched)"></mdb-success>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <button [disabled]="!form.valid" class="btn btn-primary"><i class="fas fa-cart-plus"></i> Add to Cart</button>
+                            </div>
+                        </div>
+                    </div>            
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

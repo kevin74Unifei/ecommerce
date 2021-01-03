@@ -1,0 +1,175 @@
+<div class="container content-inner-pages">
+    <div class="row">
+        <div class="col-12">
+            <!-- adicionar o passo -->
+        </div>
+    </div>
+    <form [formGroup]="form" (ngSubmit)="finishOrder()">  
+        <div class="row">              
+            <div class="col-12 col-md-4">
+                <div class="card z-depth-3">
+                    <div class="card-body">
+                        <h4 class="card-title">
+                            <a class="activator waves-effect waves-light mr-4"><i class="fas fa-map-marker-alt"></i></a>
+                            1- Address
+                        </h4>
+                        <hr>
+                        <div class="row">
+                            <div class="col-12 col-md-4">
+                                <div class="md-form">
+                                    <input mdbInput mdbValidate formControlName="postalCode" type="text" class="form-control" id="postalCode">
+                                    <label for="postalCode">Postal Code</label>
+                                    <app-field-validation [field]="form.get('postalCode')" [errorMessage]="'Postal Code cannot be empty'"></app-field-validation>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-8">
+                                <div class="md-form">
+                                    <input mdbInput mdbValidate formControlName="country" type="text" class="form-control" id="country">
+                                    <label for="country">Country</label>
+                                    <app-field-validation [field]="form.get('country')" [errorMessage]="'Country cannot be empty'"></app-field-validation>
+                                </div>
+                            </div>                            
+                            <div class="col-12 col-md-4">
+                                <div class="md-form">
+                                    <input mdbInput mdbValidate formControlName="state" type="text" class="form-control" id="state">
+                                    <label for="state">State</label>
+                                    <app-field-validation [field]="form.get('state')" [errorMessage]="'State cannot be empty'"></app-field-validation>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-8">
+                                <div class="md-form">
+                                    <input mdbInput mdbValidate formControlName="city" type="text" class="form-control" id="city">
+                                    <label for="city">City</label>
+                                    <app-field-validation [field]="form.get('city')" [errorMessage]="'City cannot be empty'"></app-field-validation>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="md-form">
+                                    <input mdbInput mdbValidate formControlName="street" type="text" class="form-control" id="street">
+                                    <label for="street">Street</label>
+                                    <app-field-validation [field]="form.get('street')" [errorMessage]="'Street cannot be empty'"></app-field-validation>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="md-form">
+                                    <input mdbInput mdbValidate formControlName="complement" type="text" class="form-control" id="complement">
+                                    <label for="complement">Complement</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-4">
+                <div class="card z-depth-3">
+                    <div class="card-body">
+                        <h4 class="card-title">
+                            <a class="activator waves-effect waves-light mr-4"><i class="far fa-credit-card"></i></a>
+                            2- Payment
+                        </h4>
+                        <hr>
+                        <div class="row">
+                            <div class="col-12 col-md-4">
+                                <div class="md-form">
+                                    <input mdbInput mdbValidate formControlName="paymentPostalCode" type="text" class="form-control" id="paymentPostalCode">
+                                    <label for="paymentPostalCode">Postal Code</label>
+                                    <app-field-validation [field]="form.get('paymentPostalCode')" [errorMessage]="'Postal Code cannot be empty'"></app-field-validation>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-8">
+                                <div class="md-form">
+                                    <input mdbInput mdbValidate formControlName="paymentCountry" type="text" class="form-control" id="paymentCountry">
+                                    <label for="paymentCountry">Country</label>
+                                    <app-field-validation [field]="form.get('paymentCountry')" [errorMessage]="'Country cannot be empty'"></app-field-validation>
+                                </div>
+                            </div> 
+                            <div class="col-12">
+                                <div class="md-form">
+                                    <input mdbInput mdbValidate formControlName="method" type="text" class="form-control" id="method">
+                                    <label for="method">Method</label>
+                                    <app-field-validation [field]="form.get('method')" [errorMessage]="'Method cannot be empty'"></app-field-validation>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="md-form">
+                                    <input mdbInput mdbValidate formControlName="name" type="text" class="form-control" id="name">
+                                    <label for="name">Name</label>
+                                    <app-field-validation [field]="form.get('name')" [errorMessage]="'Name cannot be empty'"></app-field-validation>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="md-form">
+                                    <input mdbInput mdbValidate formControlName="number" type="number" class="form-control" id="number">
+                                    <label for="number">Number</label>
+                                    <app-field-validation [field]="form.get('number')" [errorMessage]="'Number cannot be empty'"></app-field-validation>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="md-form">
+                                    <input mdbInput mdbValidate formControlName="expirationDate" type="text" class="form-control" id="expirationDate">
+                                    <label for="expirationDate">Expiration Date</label>
+                                    <app-field-validation [field]="form.get('expirationDate')" [errorMessage]="'Expiration Date cannot be empty'"></app-field-validation>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="md-form">
+                                    <input mdbInput mdbValidate formControlName="securityCode" type="number" class="form-control" id="securityCode">
+                                    <label for="securityCode">Security Code</label>
+                                    <app-field-validation [field]="form.get('securityCode')" [errorMessage]="'Security Code cannot be empty'"></app-field-validation>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-4">
+                <div class="card z-depth-2">
+                    <div class="card-body">
+                        <h4 class="card-title">
+                            <a class="activator waves-effect waves-light mr-4"><i class="fas fa-star"></i></a>
+                            Order Resume
+                        </h4>
+                        <hr>
+                        <div class="row" *ngFor="let selectedMeal of selectedMeals">
+                            <div class="col-8">
+                                <p class="card-text">({{selectedMeal.amount}}) {{selectedMeal.meal.name}}</p>
+                            </div>
+                            <div class="col-4 text-right">
+                                <p class="card-text text-success">{{selectedMeal.meal.price * selectedMeal.amount}}$</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12"><hr class="mt-4"></div>
+                            <div class="col-8">                            
+                                <p class="card-text">SubTotal</p>
+                            </div>
+                            <div class="col-4 text-right">
+                                <p class="card-text text-success">{{getTotal()}}$</p>
+                            </div>
+                        </div>    
+                        <div class="row">
+                            <div class="col-8">
+                                <p class="card-text">Shipping</p>
+                            </div>
+                            <div class="col-4 text-right">
+                                <p class="card-text text-success">*free</p>                            
+                            </div>
+                        </div> 
+                        <div class="row">
+                            <div class="col-12"><hr class="mt-4"></div>
+                            <div class="col-8">                            
+                                <h4 class="card-title">Total</h4>
+                            </div>
+                            <div class="col-4 text-right">
+                                <h4 class="card-title font-weight-bold text-success">{{getTotal()}}$</h4>
+                            </div>
+                            <div class="col-12 text-center">
+                                <button [disabled]="!form.valid" class="btn btn-primary"><i class="fas fa-check left mr-1"></i> Finish Order</button>
+                            </div>
+                        </div>               
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

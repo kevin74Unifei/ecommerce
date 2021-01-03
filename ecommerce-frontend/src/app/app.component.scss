@@ -1,0 +1,15 @@
+
+
+.wrapper {
+    display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.page-footer {
+    flex-shrink: 0;
+}
+
+.page-body {
+    flex: 1;
+}

@@ -1,0 +1,25 @@
+
+<div class="card z-depth-2">
+    <a ></a>
+
+    <img 
+      style="cursor: pointer;"
+      [routerLink]="['/meal', meal.id]" 
+      routerLinkActive="router-link-active" 
+      class="card-img-top" 
+      [src]="getImage(meal.id, meal.images[0])" 
+      [alt]="meal.name">
+    <div class="card-body text-center">  
+        <h4
+          style="cursor: pointer;" 
+          [routerLink]="['/meal', meal.id]" routerLinkActive="router-link-active" 
+          class="card-title">
+          <a>{{meal.name}}</a>
+          <a class="float-right">${{meal.price}}</a>
+        </h4>  
+        <button class="btn btn-primary" (click)="addToCart()">
+          <i class="fas fa-shopping-cart mr-1"></i>
+          Add to cart</button>    
+    </div>
+  
+  </div>

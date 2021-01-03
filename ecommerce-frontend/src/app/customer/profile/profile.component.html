@@ -1,0 +1,54 @@
+<div class="container content-inner-pages">
+    <div class="row d-flex justify-content-center">
+        <div class="col-12 col-md-8 text-center">
+            <div class="card z-depth-2">
+                <div class="view overlay">
+                  <h3 class="blue-gradient white-text">
+                    Profile
+                  </h3>
+                </div>              
+                <div class="card-body">
+                    <form [formGroup]="form" (ngSubmit)="save()">     
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="md-form">
+                                    <div class="row">
+                                        <div class="col-1">
+                                            <mdb-icon fas icon="user" class="prefix"></mdb-icon>
+                                        </div>
+                                        <div class="col-11">
+                                            <input mdbInput mdbValidate formControlName="name" minLength="3" maxLength="50" type="text"
+                                            class="form-control" id="name">
+                                            <label for="name">Name</label>
+                                            <mdb-error *ngIf="name.invalid && (name.dirty || name.touched)">Name is required</mdb-error>
+                                            <mdb-success *ngIf="name.valid && (name.dirty || name.touched)"></mdb-success>
+                                        </div>
+                                    </div>                                    
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="md-form">
+                                    <div class="row">
+                                        <div class="col-1">
+                                            <mdb-icon fas icon="lock" class="prefix"></mdb-icon>
+                                        </div>
+                                        <div class="col-11">
+                                            <input mdbInput mdbValidate formControlName="password" minlength="4" maxLength="25" type="password"
+                                                class="form-control" id="password">
+                                            <label for="password">Password</label>
+                                            <mdb-error *ngIf="password.invalid && (password.dirty || password.touched)">Password invalid</mdb-error>
+                                            <mdb-success *ngIf="password.valid && (password.dirty || password.touched)"></mdb-success>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <button class="btn blue-gradient white-text"><i class="fas fa-sign-in-alt mr-1"></i>Save</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,55 @@
+<div class="container content-inner-pages">
+    <div class="row">
+        <div class="col-12 col-md-8">
+            <app-selected-meal-list [selectedMeals]="selectedMeals"></app-selected-meal-list>
+        </div>
+        <div class="col-12 col-md-4">
+            <div class="card z-depth-2">
+                <div class="card-body">
+                    <h4 class="card-title">
+                        <a class="activator waves-effect waves-light mr-4"><i class="fas fa-star"></i></a>
+                        Order Resume
+                    </h4>
+                    <hr>
+                    <div class="row" *ngFor="let selectedMeal of selectedMeals">
+                        <div class="col-8">
+                            <p class="card-text">({{selectedMeal.amount}}) {{selectedMeal.meal.name}}</p>
+                        </div>
+                        <div class="col-4 text-right">
+                            <p class="card-text text-success">{{selectedMeal.meal.price * selectedMeal.amount}}$</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12"><hr class="mt-4"></div>
+                        <div class="col-8">                            
+                            <p class="card-text">SubTotal</p>
+                        </div>
+                        <div class="col-4 text-right">
+                            <p class="card-text text-success">{{getTotal()}}$</p>
+                        </div>
+                    </div>    
+                    <div class="row">
+                        <div class="col-8">
+                            <p class="card-text">Shipping</p>
+                        </div>
+                        <div class="col-4 text-right">
+                            <p class="card-text text-success">*free</p>                            
+                        </div>
+                    </div> 
+                    <div class="row">
+                        <div class="col-12"><hr class="mt-4"></div>
+                        <div class="col-8">                            
+                            <h4 class="card-title">Total</h4>
+                        </div>
+                        <div class="col-4 text-right">
+                            <h4 class="card-title font-weight-bold text-success">{{getTotal()}}$</h4>
+                        </div>
+                        <div class="col-12 text-center">
+                            <button class="btn btn-primary" (click)="redirect()"><i class="fas fa-check left mr-1"></i> Continue</button>
+                        </div>
+                    </div>               
+                </div>
+            </div>
+        </div>
+    </div>    
+</div>

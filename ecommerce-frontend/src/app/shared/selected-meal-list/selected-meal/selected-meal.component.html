@@ -1,0 +1,53 @@
+<div class="col-12">
+  <div class="card mb-3 z-depth-2" style="max-width: 100%;">
+    <div class="row g-0">
+      <div class="col-12 col-lg-4">
+        <img 
+          style="cursor: pointer;"
+          [routerLink]="['/meal', selectedMeal.meal.id]" 
+          routerLinkActive="router-link-active" 
+          [src]="getImage(selectedMeal.meal.id, selectedMeal.meal.images[0])" [alt]="selectedMeal.meal.name">
+      </div>
+      <div class="col-12 col-lg-8">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-12 col-lg-8 text-center">
+              <h5 class="card-title">{{selectedMeal.meal.name}}</h5>
+              <p class="card-text">{{selectedMeal.meal.description}}</p>
+              
+            </div>
+            <div class="col-12 col-lg-4">
+              <form [formGroup]="form">
+                <div class="row d-flex align-items-center">
+                  <div class="col-6 col-lg-6 text-right">
+                    <h4 class="card-title text-success">{{selectedMeal.meal.price * amount.value}}$</h4>
+                  </div>
+                  <div class="col-3 col-lg-6">
+                    <div class="md-form">
+                      <input mdbInput mdbValidate formControlName="amount" min="1" type="number" class="form-control" id="amount" (change)="updateAmount()">
+                      <label for="amount">Amount</label>
+                      <mdb-error *ngIf="amount.invalid && (amount.dirty || amount.touched)">Amount Invalid</mdb-error>
+                      <mdb-success *ngIf="amount.valid && (amount.dirty || amount.touched)"></mdb-success>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+            <div class="col-12">
+              <div class="row">
+                <div class="col-8 text-center">
+                  <p class="card-text"><small class="text-muted">Expires in {{selectedMeal.meal.daysToExpire}} days</small></p>
+                </div>
+                <div class="col-4 text-left">
+                  <small class="text-muted">
+                    <a (click)="remove()"><i class="fas fa-trash-alt"></i> Remove</a>
+                  </small>
+                </div>
+              </div>
+            </div>
+          </div>          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,36 @@
+
+<mdb-navbar SideClass="navbar navbar-expand-lg navbar-dark unique-color-dark ie-nav fixed-top nav " 
+[containerInside]="false">
+
+<mdb-navbar-brand>
+    <a class="navbar-brand" [routerLink]="['/']"><mdb-icon fas icon="cookie-bite" size="2x" class="mr-1 white-text pr-3"></mdb-icon></a>
+</mdb-navbar-brand>
+
+<links>  
+  <ul class="navbar-nav ml-auto">
+    <li class="nav-item">
+      <a class="nav-link waves-light" [routerLink]="['/cart']" mdbWavesEffect>
+          <mdb-icon fas icon="shopping-cart" size="2x"></mdb-icon></a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link waves-light">
+        <div class="btn-group" mdbDropdown>
+          <mdb-icon fas icon="user" size="2x" mdbDropdownToggle></mdb-icon>
+          <div class="dropdown-menu dropdown-menu-right dropdown-primary">
+            <a class="dropdown-item" *ngIf="!isLogged; else logged" (click)="redirect('login')">Login</a>
+            <ng-template #logged>
+              <a class="dropdown-item" [routerLink]="['/customer','profile']" 
+                routerLinkActive="router-link-active">Profile</a>
+              <a class="dropdown-item" [routerLink]="['/customer','orders']" 
+                routerLinkActive="router-link-active">My Orders</a>
+              <div class="divider dropdown-divider"></div>
+              <a class="dropdown-item" (click)="logout()">Logout</a>
+            </ng-template>            
+          </div>
+        </div>
+      </a>
+    </li> 
+  </ul>
+</links>
+
+</mdb-navbar>

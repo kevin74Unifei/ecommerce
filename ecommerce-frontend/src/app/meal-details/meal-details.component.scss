@@ -1,0 +1,16 @@
+$img-width: 65vh;
+img{
+    height: $img-width;
+    width: 120%;
+}
+
+.container-fluid{
+    position: relative;
+}
+
+.container{
+    position: absolute;
+    left: 12vw;
+    top: ($img-width + 5vh);
+}
+

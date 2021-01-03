@@ -1,0 +1,5 @@
+<div class="row" *ngIf="meals.length > 0">
+    <div class="col-sm-12 col-md-6 col-lg-4" *ngFor="let meal of meals">
+        <app-meal [meal]="meal"></app-meal>
+    </div>
+</div>
