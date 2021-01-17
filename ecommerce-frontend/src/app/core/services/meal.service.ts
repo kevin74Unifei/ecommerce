@@ -13,7 +13,6 @@ export class MealService {
   constructor(private _http: HttpClient) { }
 
   private handleError(error: HttpErrorResponse){
-    console.log(error);
     return throwError(error);
   }
 

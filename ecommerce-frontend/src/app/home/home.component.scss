@@ -1,4 +1,19 @@
+
 .spotlight{
     width: 100vw;
-    height: 100vh;
+}
+
+
+@media(min-width: 760px){
+    .spotlight{
+        width: 98.9vw;
+        height: 100vh;
+    }
+}
+
+.title{
+    position: absolute;
+    z-index: 10;
+    top: 55%;
+    right: 5%;
 }

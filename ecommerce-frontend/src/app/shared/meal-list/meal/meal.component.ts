@@ -1,6 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Meal } from '@core/models/meal.model';
+import { NotificationMessage, NotificationType } from '@core/models/notificationMessage.model';
 import { CartService } from '@core/services/cart.service';
+import { NotificationService } from '@core/services/notification.service';
 import { environment } from '@env'; 
 
 @Component({
@@ -13,7 +15,8 @@ export class MealComponent implements OnInit {
   @Input() meal: Meal
 
   constructor(
-    private _cartService: CartService
+    private _cartService: CartService,
+    private _notificationService: NotificationService
   ) { }
 
   ngOnInit(): void {
@@ -25,6 +28,7 @@ export class MealComponent implements OnInit {
 
   addToCart(): void{
     this._cartService.addProduct(this.meal);
+    this._notificationService.sendMessage(new NotificationMessage(this.meal.name + " added successfully to the cart!", NotificationType.success));
   }
 
 }

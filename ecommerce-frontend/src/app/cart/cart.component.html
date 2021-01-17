@@ -1,4 +1,19 @@
-<div class="container content-inner-pages">
+<div class="container content-inner-pages" *ngIf="selectedMeals.length > 0 else message">
+    <div class="row">
+        <div class="col-12">
+            <h2 class="text-center">
+                <i class="fas fa-cart-arrow-down mr-2"></i>
+                My Cart
+            </h2>
+            <hr>
+        </div>
+        <div class="col-12">
+            <mdb-breadcrumb>
+                <mdb-breadcrumb-item [routerLink]="['/']" class="blue-text">Home</mdb-breadcrumb-item>
+                <mdb-breadcrumb-item class="active">Cart</mdb-breadcrumb-item>
+              </mdb-breadcrumb>
+        </div>
+    </div>
     <div class="row">
         <div class="col-12 col-md-8">
             <app-selected-meal-list [selectedMeals]="selectedMeals"></app-selected-meal-list>
@@ -7,8 +22,8 @@
             <div class="card z-depth-2">
                 <div class="card-body">
                     <h4 class="card-title">
-                        <a class="activator waves-effect waves-light mr-4"><i class="fas fa-star"></i></a>
-                        Order Resume
+                        <i class="fas fa-star mr-2"></i>
+                        Order Summary
                     </h4>
                     <hr>
                     <div class="row" *ngFor="let selectedMeal of selectedMeals">
@@ -16,7 +31,7 @@
                             <p class="card-text">({{selectedMeal.amount}}) {{selectedMeal.meal.name}}</p>
                         </div>
                         <div class="col-4 text-right">
-                            <p class="card-text text-success">{{selectedMeal.meal.price * selectedMeal.amount}}$</p>
+                            <p class="card-text text-success">{{selectedMeal.meal.price * selectedMeal.amount | currency}}</p>
                         </div>
                     </div>
                     <div class="row">
@@ -25,7 +40,7 @@
                             <p class="card-text">SubTotal</p>
                         </div>
                         <div class="col-4 text-right">
-                            <p class="card-text text-success">{{getTotal()}}$</p>
+                            <p class="card-text text-success">{{getTotal() | currency}}</p>
                         </div>
                     </div>    
                     <div class="row">
@@ -38,14 +53,14 @@
                     </div> 
                     <div class="row">
                         <div class="col-12"><hr class="mt-4"></div>
-                        <div class="col-8">                            
+                        <div class="col-7">                            
                             <h4 class="card-title">Total</h4>
                         </div>
-                        <div class="col-4 text-right">
-                            <h4 class="card-title font-weight-bold text-success">{{getTotal()}}$</h4>
+                        <div class="col-5 text-right">
+                            <h4 class="card-title font-weight-bold text-success">{{getTotal() | currency}}</h4>
                         </div>
                         <div class="col-12 text-center">
-                            <button class="btn btn-primary" (click)="redirect()"><i class="fas fa-check left mr-1"></i> Continue</button>
+                            <button class="btn amber darken-1" (click)="redirect()"><i class="fas fa-check left mr-1"></i> Continue</button>
                         </div>
                     </div>               
                 </div>
@@ -53,3 +68,17 @@
         </div>
     </div>    
 </div>
+
+<ng-template #message>
+    <div class="container content-inner-pages">
+        <div class="row text-center" style="margin-top: 25vh;">
+            <div class="col-12">
+                <h2>Your Cart is empty</h2>
+                <hr>
+            </div>
+            <div class="col-12">
+                <a [routerLink]="['/']" class="btn btn-outline-warning"><i class="fas fa-arrow-left mr-1"></i>Back to the Meals</a>
+            </div>
+        </div>        
+    </div>
+</ng-template>

@@ -4,13 +4,13 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TruncateTextPipe } from './pipes/truncate-text/truncate-text.pipe';
 import { AuthInterceptorService } from './helpers/auth-interceptor.service';
 
-
 @NgModule({
   declarations: [TruncateTextPipe],
   imports: [
     CommonModule,
     HttpClientModule
   ],
+  exports: [TruncateTextPipe],
   providers:[
     {
       provide: HTTP_INTERCEPTORS, 

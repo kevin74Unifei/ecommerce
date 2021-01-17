@@ -7,8 +7,12 @@
     opacity: 0.8;
 }
 
+.breadcrumb{
+    background-color: white !important;
+}
+
 .content-inner-pages{
-    margin-top: 10vh;
+    margin-top: 11vh;
 }
 
 input.ng-invalid.ng-touched{
@@ -90,7 +94,7 @@ input.ng-invalid.ng-touched{
     height: 2rem;
     color: #495057;
 }
-    
+
 @media not all and (min-resolution:.001dpcm) {
     @supports (-webkit-appearance: none) and (stroke-color:transparent) {
         .number-input.def-number-input.safari_only button:before,

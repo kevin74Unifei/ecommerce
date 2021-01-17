@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { CustomerLogin } from '@core/models/customer.model';
+import { NotificationMessage, NotificationType } from '@core/models/notificationMessage.model';
 import { CustomerService } from '@core/services/customer.service';
+import { NotificationService } from '@core/services/notification.service';
 
 @Component({
   selector: 'app-login',
@@ -13,11 +15,13 @@ export class LoginComponent implements OnInit {
 
   redirectUrl = '';
   form: FormGroup;
+  isLogging = false;
 
   constructor(
     private _customerService: CustomerService,
     private _router: Router,
-    private _route: ActivatedRoute
+    private _route: ActivatedRoute,
+    private _notification: NotificationService
   ) {}
 
   ngOnInit(): void {
@@ -36,18 +40,23 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  get email() { return this.form.get('email'); }
-  get password() { return this.form.get('password'); }
-
   login(): void{
+    this.isLogging = true;
     var customer = new CustomerLogin(
       this.form.value["email"],
       this.form.value["password"]
     );
 
     this._customerService.login(customer).subscribe(
-      result => this._router.navigateByUrl("/" + this.redirectUrl.replace("+","/")),
-      error => console.log(error)
+      result => {
+        this._router.navigateByUrl("/" + this.redirectUrl.replace("+","/")); 
+        this._notification.sendMessage(new NotificationMessage("Logged successfully", NotificationType.success))
+        this.isLogging = false;
+      },
+      error => {
+        this._notification.sendMessage(new NotificationMessage(error, NotificationType.error));
+        this.isLogging = false;
+      }
     );
     
   }

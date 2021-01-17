@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { CustomerSave } from '@core/models/customer.model';
+import { NotificationMessage, NotificationType } from '@core/models/notificationMessage.model';
 import { CustomerService } from '@core/services/customer.service';
+import { NotificationService } from '@core/services/notification.service';
 
 @Component({
   selector: 'app-register',
@@ -13,11 +15,13 @@ export class RegisterComponent implements OnInit {
 
   redirectUrl = '';
   form: FormGroup;
+  isLogging = false;
 
   constructor(
     private _customerService: CustomerService,
     private _router: Router,
-    private _route: ActivatedRoute
+    private _route: ActivatedRoute,
+    private _notification: NotificationService
   ) {}
 
   ngOnInit(): void {
@@ -37,21 +41,26 @@ export class RegisterComponent implements OnInit {
     });
   }
 
-  get email() { return this.form.get('email'); }
-  get name() { return this.form.get('name'); }
-  get password() { return this.form.get('password'); }
-
   register(): void{
+    this.isLogging = true;
     var customer = new CustomerSave(
       0, 
       this.form.value["name"],
       this.form.value["email"],
-      this.form.value["password"]
+      this.form.value["password"],
+      null,
+      null
     );
 
     this._customerService.register(customer).subscribe(
-      result => this._router.navigateByUrl("/" + this.redirectUrl.replace("+","/")),
-      error => console.log(error)
+      result => {
+        this._router.navigateByUrl("/" + this.redirectUrl.replace("+","/")); 
+        this._notification.sendMessage(new NotificationMessage("Logged successfully", NotificationType.success));
+        this.isLogging = false;},
+      error => {
+        this._notification.sendMessage(new NotificationMessage(error, NotificationType.error));
+        this.isLogging = false;
+      }
     );
   }
 }

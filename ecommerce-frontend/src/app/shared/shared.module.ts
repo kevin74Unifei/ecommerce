@@ -8,13 +8,25 @@ import { SelectedMealListComponent } from './selected-meal-list/selected-meal-li
 import { SelectedMealComponent } from './selected-meal-list/selected-meal/selected-meal.component';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { FieldValidationComponent } from './field-validation/field-validation.component';
+import { CoreModule } from '@core/core.module';
+import { ParallaxDirective } from './directives/parallax.directive';
+import { LoadingButtonComponent } from './loading-button/loading-button.component';
 
 
 
 @NgModule({
-  declarations: [MealListComponent, MealComponent, SelectedMealListComponent, SelectedMealComponent, FieldValidationComponent],
+  declarations: [
+    MealListComponent, 
+    MealComponent, 
+    SelectedMealListComponent, 
+    SelectedMealComponent, 
+    FieldValidationComponent,
+    ParallaxDirective,
+    LoadingButtonComponent
+  ],
   imports: [
     CommonModule,
+    CoreModule,
     FormsModule,
     RouterModule,
     ReactiveFormsModule,
@@ -25,7 +37,9 @@ import { FieldValidationComponent } from './field-validation/field-validation.co
     ReactiveFormsModule,
     MealListComponent,
     SelectedMealListComponent,
-    FieldValidationComponent
+    FieldValidationComponent,
+    ParallaxDirective,
+    LoadingButtonComponent
   ]
 })
 export class SharedModule { }

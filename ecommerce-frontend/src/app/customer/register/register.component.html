@@ -1,13 +1,13 @@
 <div class="container content-inner-pages">
     <div class="row d-flex justify-content-center">
         <div class="col-12 col-md-8 text-center">
-            <div class="card z-depth-2">
-                <div class="view overlay">
-                  <h3 class="blue-gradient white-text">
-                    Register
-                  </h3>
-                </div>              
+            <div class="card z-depth-2">         
                 <div class="card-body">
+                    <h3 class="card-title">
+                        <i class="fas fa-door-open mr-2"></i>
+                        Register
+                    </h3>
+                    <hr>
                     <form [formGroup]="form" (ngSubmit)="register()">     
                         <div class="row">
                             <div class="col-12">
@@ -20,8 +20,7 @@
                                             <input mdbInput mdbValidate formControlName="name" minLength="3" maxLength="50" type="text"
                                             class="form-control" id="name">
                                             <label for="name">Name</label>
-                                            <mdb-error *ngIf="name.invalid && (name.dirty || name.touched)">Name is required</mdb-error>
-                                            <mdb-success *ngIf="name.valid && (name.dirty || name.touched)"></mdb-success>
+                                            <app-field-validation [field]="form.get('name')" [errorMessage]="'Name is required'"></app-field-validation>
                                         </div>
                                     </div>                                    
                                 </div>
@@ -36,8 +35,7 @@
                                             <input mdbInput mdbValidate formControlName="email" minLength="6" maxLength="25" type="email"
                                             class="form-control" id="email">
                                             <label for="email">E-mail</label>
-                                            <mdb-error *ngIf="email.invalid && (email.dirty || email.touched)">Email invalid</mdb-error>
-                                            <mdb-success *ngIf="email.valid && (email.dirty || email.touched)"></mdb-success>
+                                            <app-field-validation [field]="form.get('email')" [errorMessage]="'Email invalid'"></app-field-validation>
                                         </div>
                                     </div>                                    
                                 </div>
@@ -52,14 +50,16 @@
                                             <input mdbInput mdbValidate formControlName="password" minlength="4" maxLength="25" type="password"
                                                 class="form-control" id="password">
                                             <label for="password">Password</label>
-                                            <mdb-error *ngIf="password.invalid && (password.dirty || password.touched)">Password invalid</mdb-error>
-                                            <mdb-success *ngIf="password.valid && (password.dirty || password.touched)"></mdb-success>
+                                            <app-field-validation [field]="form.get('password')" [errorMessage]="'Password invalid'"></app-field-validation>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-12">
-                                <button class="btn blue-gradient white-text"><i class="fas fa-sign-in-alt mr-1"></i>Register</button>
+                                <button *ngIf="!isLogging; else loading" class="btn amber darken-1"><i class="fas fa-door-open mr-1"></i>Register</button>
+                                <ng-template #loading>
+                                    <app-loading-button></app-loading-button>
+                                </ng-template>
                             </div>
                             <div class="col-12" style="padding-top: 1em;">
                                 <a [routerLink]="['/customer','login', redirectUrl]" 

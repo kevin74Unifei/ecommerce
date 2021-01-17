@@ -12,6 +12,7 @@ import { environment } from '@env';
 export class OrdersComponent implements OnInit {
 
   orders: OrderStored[] = []; 
+  isLoading = true; 
 
   constructor(
     private _orderService: OrderService,
@@ -20,7 +21,12 @@ export class OrdersComponent implements OnInit {
 
   ngOnInit(): void {
     this._orderService.getOrders(this._customerService.customer.value.id)
-      .subscribe(orders => this.orders = orders);
+      .subscribe(orders => {
+        this.orders = orders; 
+        this.isLoading = false
+      },errors => {
+        this.isLoading = false
+      });
   }
 
   getImage(id: number, imageName: string): string{

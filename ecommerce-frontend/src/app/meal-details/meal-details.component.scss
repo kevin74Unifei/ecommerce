@@ -1,16 +1,22 @@
-$img-width: 65vh;
+$img-width: 60vh;
 img{
     height: $img-width;
     width: 120%;
+}
+
+.carousel img{
+    height: 40vh;
+    width: 100%;
 }
 
 .container-fluid{
     position: relative;
 }
 
-.container{
-    position: absolute;
-    left: 12vw;
-    top: ($img-width + 5vh);
+@media(min-width: 760px){
+    .info{
+        position: absolute;
+        z-index: 10;
+        top: ($img-width + 13vh);
+    }
 }
-

@@ -1,30 +1,43 @@
 
-<mdb-navbar SideClass="navbar navbar-expand-lg navbar-dark unique-color-dark ie-nav fixed-top nav " 
+<mdb-navbar SideClass="navbar navbar-expand-lg blue-grey lighten-4 ie-nav fixed-top nav " 
 [containerInside]="false">
 
 <mdb-navbar-brand>
-    <a class="navbar-brand" [routerLink]="['/']"><mdb-icon fas icon="cookie-bite" size="2x" class="mr-1 white-text pr-3"></mdb-icon></a>
+    <a class="navbar-brand" [routerLink]="['/']"><mdb-icon fas icon="cookie-bite" size="2x" class="mr-1 black-text pr-3"></mdb-icon></a>
 </mdb-navbar-brand>
 
 <links>  
   <ul class="navbar-nav ml-auto">
     <li class="nav-item">
       <a class="nav-link waves-light" [routerLink]="['/cart']" mdbWavesEffect>
-          <mdb-icon fas icon="shopping-cart" size="2x"></mdb-icon></a>
+          <mdb-icon fas icon="shopping-cart" class="black-text" size="2x"></mdb-icon><span class="d-md-none">Cart</span></a>
     </li>
     <li class="nav-item">
       <a class="nav-link waves-light">
         <div class="btn-group" mdbDropdown>
-          <mdb-icon fas icon="user" size="2x" mdbDropdownToggle></mdb-icon>
+          <mdb-icon fas icon="user" class="black-text" size="2x" mdbDropdownToggle></mdb-icon>
+          <span class="d-md-none">Profile</span>
           <div class="dropdown-menu dropdown-menu-right dropdown-primary">
-            <a class="dropdown-item" *ngIf="!isLogged; else logged" (click)="redirect('login')">Login</a>
+            <a class="dropdown-item white-text" *ngIf="!isLogged; else logged" (click)="redirect('login')">
+              <i class="fas fa-sign-in-alt mr-1"></i>
+              Login
+            </a>
             <ng-template #logged>
-              <a class="dropdown-item" [routerLink]="['/customer','profile']" 
-                routerLinkActive="router-link-active">Profile</a>
-              <a class="dropdown-item" [routerLink]="['/customer','orders']" 
-                routerLinkActive="router-link-active">My Orders</a>
+              <a class="dropdown-item white-text" [routerLink]="['/customer','profile']" 
+                routerLinkActive="router-link-active">
+                <i class="fas fa-user-circle mr-1"></i>
+                Profile
+              </a>
+              <a class="dropdown-item white-text" [routerLink]="['/customer','orders']" 
+                routerLinkActive="router-link-active">
+                <i class="fas fa-receipt mr-1"></i>
+                My Orders
+              </a>
               <div class="divider dropdown-divider"></div>
-              <a class="dropdown-item" (click)="logout()">Logout</a>
+              <a class="dropdown-item white-text" (click)="logout()">
+                <i class="fas fa-sign-out-alt mr-1"></i>
+                Logout
+              </a>
             </ng-template>            
           </div>
         </div>

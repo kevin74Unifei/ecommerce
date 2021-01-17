@@ -2,8 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Meal } from '@core/models/meal.model';
+import { NotificationMessage, NotificationType } from '@core/models/notificationMessage.model';
 import { CartService } from '@core/services/cart.service';
 import { MealService } from '@core/services/meal.service';
+import { NotificationService } from '@core/services/notification.service';
 import { environment } from '@env';
 
 @Component({
@@ -19,7 +21,8 @@ export class MealDetailsComponent implements OnInit {
   constructor(
     private _route: ActivatedRoute,
     private _mealService: MealService,
-    private _cartService: CartService
+    private _cartService: CartService,
+    private _notificationService: NotificationService
   ) {}
 
   ngOnInit(): void {
@@ -48,5 +51,6 @@ export class MealDetailsComponent implements OnInit {
 
   addToCart(){
     this._cartService.addProduct(this.meal, this.form.value["amount"]);
+    this._notificationService.sendMessage(new NotificationMessage(this.meal.name + " added successfully to the cart!", NotificationType.success));
   }
 }

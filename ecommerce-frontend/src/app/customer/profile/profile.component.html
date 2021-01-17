@@ -1,49 +1,161 @@
-<div class="container content-inner-pages">
+<div *ngIf="form" class="container content-inner-pages">
     <div class="row d-flex justify-content-center">
         <div class="col-12 col-md-8 text-center">
-            <div class="card z-depth-2">
-                <div class="view overlay">
-                  <h3 class="blue-gradient white-text">
-                    Profile
-                  </h3>
-                </div>              
+            <div class="card z-depth-2">            
                 <div class="card-body">
+                    <h3 class="card-title">
+                        <i class="fas fa-user-circle mr-2"></i>
+                        Profile
+                    </h3>
+                    <hr>
                     <form [formGroup]="form" (ngSubmit)="save()">     
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="md-form">
-                                    <div class="row">
-                                        <div class="col-1">
-                                            <mdb-icon fas icon="user" class="prefix"></mdb-icon>
-                                        </div>
-                                        <div class="col-11">
-                                            <input mdbInput mdbValidate formControlName="name" minLength="3" maxLength="50" type="text"
-                                            class="form-control" id="name">
-                                            <label for="name">Name</label>
-                                            <mdb-error *ngIf="name.invalid && (name.dirty || name.touched)">Name is required</mdb-error>
-                                            <mdb-success *ngIf="name.valid && (name.dirty || name.touched)"></mdb-success>
-                                        </div>
-                                    </div>                                    
+                        <div class="row profile">
+                            <div class="col-12">  
+                                <div class="row md-form">                          
+                                    <div class="col-1">
+                                        <mdb-icon fas icon="user" class="prefix"></mdb-icon>
+                                    </div>
+                                    <div class="col-11">
+                                        <input mdbInput mdbValidate formControlName="name" minLength="3" maxLength="50" type="text"
+                                        class="form-control" id="name">
+                                        <label for="name">Name</label>
+                                        <app-field-validation [field]="form.get('name')" [errorMessage]="'Name is required'"></app-field-validation>
+                                    </div> 
+                                </div>
+                            </div>  
+                            <div class="col-12">  
+                                <div class="row md-form">                          
+                                    <div class="col-1">
+                                        <mdb-icon fas icon="lock" class="prefix"></mdb-icon>
+                                    </div>
+                                    <div class="col-11">
+                                        <input mdbInput mdbValidate formControlName="password" minlength="4" maxLength="25" type="password"
+                                            class="form-control" id="password">
+                                        <label for="password">Password</label>
+                                        <app-field-validation [field]="form.get('password')" [errorMessage]="'Password invalid'"></app-field-validation>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-12">
-                                <div class="md-form">
-                                    <div class="row">
-                                        <div class="col-1">
-                                            <mdb-icon fas icon="lock" class="prefix"></mdb-icon>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 text-left">
+                                <h5>
+                                    <a (click)="address.toggle()">
+                                        <i class="fas fa-map-marker-alt mr-2"></i>
+                                        Address
+                                    </a>
+                                </h5>
+                                <hr>
+                            </div>
+                            <div class="col-12" mdbCollapse #address="bs-collapse">
+                                <div class="row" formGroupName="address">
+                                    <div class="col-12 col-md-4">
+                                        <div class="md-form">
+                                            <input mdbInput mdbValidate formControlName="postalCode" type="text" class="form-control" id="postalCode">
+                                            <label for="postalCode">Postal Code</label>
+                                            <app-field-validation [field]="form.get('address.postalCode')" [errorMessage]="'Postal Code cannot be empty'"></app-field-validation>
                                         </div>
-                                        <div class="col-11">
-                                            <input mdbInput mdbValidate formControlName="password" minlength="4" maxLength="25" type="password"
-                                                class="form-control" id="password">
-                                            <label for="password">Password</label>
-                                            <mdb-error *ngIf="password.invalid && (password.dirty || password.touched)">Password invalid</mdb-error>
-                                            <mdb-success *ngIf="password.valid && (password.dirty || password.touched)"></mdb-success>
+                                    </div>
+                                    <div class="col-12 col-md-8">
+                                        <div class="md-form">
+                                            <input mdbInput mdbValidate formControlName="country" type="text" class="form-control" id="country">
+                                            <label for="country">Country</label>
+                                            <app-field-validation [field]="form.get('address.country')" [errorMessage]="'Country cannot be empty'"></app-field-validation>
+                                        </div>
+                                    </div>                            
+                                    <div class="col-12 col-md-4">
+                                        <div class="md-form">
+                                            <input mdbInput mdbValidate formControlName="state" type="text" class="form-control" id="state">
+                                            <label for="state">State</label>
+                                            <app-field-validation [field]="form.get('address.state')" [errorMessage]="'State cannot be empty'"></app-field-validation>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-8">
+                                        <div class="md-form">
+                                            <input mdbInput mdbValidate formControlName="city" type="text" class="form-control" id="city">
+                                            <label for="city">City</label>
+                                            <app-field-validation [field]="form.get('address.city')" [errorMessage]="'City cannot be empty'"></app-field-validation>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="md-form">
+                                            <input mdbInput mdbValidate formControlName="street" type="text" class="form-control" id="street">
+                                            <label for="street">Street</label>
+                                            <app-field-validation [field]="form.get('address.street')" [errorMessage]="'Street cannot be empty'"></app-field-validation>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="md-form">
+                                            <input mdbInput mdbValidate formControlName="complement" type="text" class="form-control" id="complement">
+                                            <label for="complement">Complement</label>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 text-left">
+                                <h5>
+                                    <a (click)="payment.toggle()">
+                                        <i class="fas fa-credit-card mr-2"></i>
+                                        Payment
+                                    </a>
+                                </h5>
+                                <hr>
+                            </div>
+                            <div class="col-12" mdbCollapse #payment="bs-collapse">
+                                <div class="row" formGroupName="payment">
+                                    <div class="col-12 col-md-4">
+                                        <div class="md-form">
+                                            <input mdbInput mdbValidate formControlName="postalCode" type="text" class="form-control" id="paymentPostalCode">
+                                            <label for="paymentPostalCode">Postal Code</label>
+                                            <app-field-validation [field]="form.get('payment.postalCode')" [errorMessage]="'Postal Code cannot be empty'"></app-field-validation>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-8">
+                                        <div class="md-form">
+                                            <input mdbInput mdbValidate formControlName="country" type="text" class="form-control" id="paymentCountry">
+                                            <label for="paymentCountry">Country</label>
+                                            <app-field-validation [field]="form.get('payment.country')" [errorMessage]="'Country cannot be empty'"></app-field-validation>
+                                        </div>
+                                    </div> 
+                                    <div class="col-12">
+                                        <div class="md-form">
+                                            <input mdbInput mdbValidate formControlName="name" type="text" class="form-control" id="paymentName">
+                                            <label for="paymentName">Name</label>
+                                            <app-field-validation [field]="form.get('payment.name')" [errorMessage]="'Name cannot be empty'"></app-field-validation>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="md-form">
+                                            <input mdbInput mdbValidate formControlName="number" type="number" class="form-control" id="number">
+                                            <label for="number">Number</label>
+                                            <app-field-validation [field]="form.get('payment.number')" [errorMessage]="'Number cannot be empty'"></app-field-validation>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="md-form">
+                                            <input mdbInput mdbValidate formControlName="expirationDate" type="text" class="form-control" id="expirationDate">
+                                            <label for="expirationDate">Expiration Date</label>
+                                            <app-field-validation [field]="form.get('payment.expirationDate')" [errorMessage]="'Expiration Date cannot be empty'"></app-field-validation>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="md-form">
+                                            <input mdbInput mdbValidate formControlName="securityCode" type="number" class="form-control" id="securityCode">
+                                            <label for="securityCode">Security Code</label>
+                                            <app-field-validation [field]="form.get('payment.securityCode')" [errorMessage]="'Security Code cannot be empty'"></app-field-validation>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
                             <div class="col-12">
-                                <button class="btn blue-gradient white-text"><i class="fas fa-sign-in-alt mr-1"></i>Save</button>
+                                <button *ngIf="!isLogging; else loading" class="btn amber darken-1"><i class="fas fa-save mr-1"></i>Save</button>
+                                <ng-template #loading>
+                                    <app-loading-button></app-loading-button>
+                                </ng-template>
                             </div>
                         </div>
                     </form>

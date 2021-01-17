@@ -59,6 +59,8 @@ public class CustomerService {
         customer.setName(customerModel.getName());
         customer.setEmail(customerModel.getEmail());
         customer.setPassword(customerModel.getPassword());
+        customer.setAddress(customerModel.getAddress());
+        customer.setPayment(customerModel.getPayment());
 
         return _customerRepository.save(customer);
     }

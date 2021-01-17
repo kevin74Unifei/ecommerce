@@ -11,21 +11,21 @@
       <div class="col-12 col-lg-8">
         <div class="card-body">
           <div class="row">
-            <div class="col-12 col-lg-8 text-center">
+            <div class="col-12 col-lg-6 text-center">
               <h5 class="card-title">{{selectedMeal.meal.name}}</h5>
-              <p class="card-text">{{selectedMeal.meal.description}}</p>
+              <p class="card-text">{{selectedMeal.meal.description | truncate:70 }}</p>
               
             </div>
-            <div class="col-12 col-lg-4">
+            <div class="col-12 col-lg-6">
               <form [formGroup]="form">
                 <div class="row d-flex align-items-center">
-                  <div class="col-6 col-lg-6 text-right">
-                    <h4 class="card-title text-success">{{selectedMeal.meal.price * amount.value}}$</h4>
+                  <div class="col-6 col-lg-7 text-right">
+                    <h4 class="card-title text-success">{{selectedMeal.meal.price * amount.value | currency}}</h4>
                   </div>
-                  <div class="col-3 col-lg-6">
+                  <div class="col-3 col-lg-5">
                     <div class="md-form">
                       <input mdbInput mdbValidate formControlName="amount" min="1" type="number" class="form-control" id="amount" (change)="updateAmount()">
-                      <label for="amount">Amount</label>
+                      <label for="amount">Quantity</label>
                       <mdb-error *ngIf="amount.invalid && (amount.dirty || amount.touched)">Amount Invalid</mdb-error>
                       <mdb-success *ngIf="amount.valid && (amount.dirty || amount.touched)"></mdb-success>
                     </div>

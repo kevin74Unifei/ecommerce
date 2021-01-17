@@ -61,16 +61,20 @@ public class CustomerController {
         customerResponseModel.setToken(getJWTToken(customer.getEmail()));
         customerResponseModel.setExpiresIn(Constants.TOKEN_EXPIRES_IN);
         customerResponseModel.setEmail(customer.getEmail());
-        customerResponseModel.setPassword(customer.getPassword());
         customerResponseModel.setName(customer.getName());
         customerResponseModel.setId(customer.getId());
 
         return customerResponseModel;
     }
 
-    private CustomerResponseModel getLoggedResponse(String email){
+    private CustomerResponseModel getLoggedResponse(Customer customer){
         CustomerResponseModel customerResponseModel = new CustomerResponseModel();
-        customerResponseModel.setEmail(email);
+        customerResponseModel.setToken(getJWTToken(customer.getEmail()));
+        customerResponseModel.setExpiresIn(Constants.TOKEN_EXPIRES_IN);
+        customerResponseModel.setPassword(customer.getPassword());
+        customerResponseModel.setAddress(customer.getAddress());
+        customerResponseModel.setPayment(customer.getPayment());
+
         return customerResponseModel;
     }
 
@@ -107,22 +111,22 @@ public class CustomerController {
             CustomerModel customerModel = mapper.readValue(body, CustomerModel.class);
             Customer customer = _customerService.save(customerModel);
 
-            return ResponseEntity.ok(getLoggedResponse(customer.getEmail()));
+            return ResponseEntity.ok(null);
         }catch(Exception ex){
             return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 
-    @PostMapping("/getByEmail")
-    public ResponseEntity<Object> getCustomerByEmail(@RequestBody String body){
+    @PostMapping("/get")
+    public ResponseEntity<Object> get(@RequestBody String body){
         try{
             ObjectMapper mapper = new ObjectMapper();
             CustomerModel customerModel = mapper.readValue(body, CustomerModel.class);
             Customer customer = _customerRepository.findByEmail(customerModel.getEmail());
-            if(customer == null)
+            if(customer == null || customer.getId() != customer.getId())
                 throw new Exception("Customer not found");
 
-            return new ResponseEntity<>(customer, HttpStatus.OK);
+            return ResponseEntity.ok(getLoggedResponse(customer));
         }catch (Exception ex){
             return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
         }

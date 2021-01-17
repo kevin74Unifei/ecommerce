@@ -1,15 +1,24 @@
-import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { CustomerSave, CustomerLogin, Customer } from '@core/models/customer.model';
+import { Address } from '@core/models/address.model';
+import { CustomerSave, CustomerLogin, Customer, CustomerGetProfile } from '@core/models/customer.model';
+import { Payment } from '@core/models/payment.model';
 import { environment } from '@env';
 import { BehaviorSubject, throwError } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
+import { catchError, exhaustMap, switchMap, tap } from 'rxjs/operators';
 
 export interface AuthResponseData{
   id: number,
   email: string,
   name: string,
+  token: string,
+  expiresIn: number
+}
+
+export interface GetResponseData{
+  address: Address, 
+  payment: Payment,
   password: string,
   token: string,
   expiresIn: number
@@ -20,7 +29,7 @@ export interface AuthResponseData{
 })
 export class CustomerService {
 
-  private tokenExpirationTimer: any;
+  private _tokenExpirationTimer: any;
   customer = new BehaviorSubject<Customer>(null);
 
   constructor(
@@ -28,31 +37,35 @@ export class CustomerService {
     private _router: Router) {}
 
   private handleError(error: HttpErrorResponse){
-    console.log(error);
-    if(!error.error || !error.error.error)
+    if(!error.error)
       return throwError('An unknown error occurred!');
 
-    return throwError(error.error.error.text);
+      return throwError(error.error);
   }
 
-  private handleAuthentication(id: number, email: string, name: string, password: string, token: string, expiresIn: number){
+  private handleAuthentication(id: number, email: string, name: string, token: string, expiresIn: number, password: string, address: Address, payment: Payment){
     const expirationDate = new Date(new Date().getTime() + expiresIn);
     const customer = new Customer(
       id,
       name, 
-      password,
-      email, 
+      email,
       token, 
       expirationDate
     );
   
-    this.customer.next(customer);
-    this.setLogoutTimer(expiresIn);
     localStorage.setItem('customerData', JSON.stringify(customer));
+    customer.address = address;
+    customer.password = password;
+    customer.payment = payment;
+    this.customer.next(customer);
+
+    this.setLogoutTimer(expiresIn);
+    
   }
   
   private setLogoutTimer(expirationDuration: number){
-    this.tokenExpirationTimer = setTimeout(()=>{
+
+    this._tokenExpirationTimer = setTimeout(()=>{
       this.logout();
     }, expirationDuration);
   }
@@ -70,8 +83,7 @@ export class CustomerService {
     if(!customerData)
       return; 
 
-    const loaddedCustomer = new Customer(customerData.id, customerData.name, customerData.password, customerData.email,
-      customerData._token, new Date(customerData._tokenExpirationDate));
+    const loaddedCustomer = new Customer(customerData.id, customerData.name, customerData.email,customerData._token, new Date(customerData._tokenExpirationDate));
     if(loaddedCustomer){
       this.customer.next(loaddedCustomer);
       const expirationDuration = new Date(customerData._tokenExpirationDate).getTime() - new Date().getTime();
@@ -85,28 +97,37 @@ export class CustomerService {
     localStorage.removeItem('customerData');
     this._router.navigate(['/']);
 
-    if(this.tokenExpirationTimer)
-      clearTimeout(this.tokenExpirationTimer);
+    if(this._tokenExpirationTimer)
+      clearTimeout(this._tokenExpirationTimer);
 
-    this.tokenExpirationTimer = null;
+    this._tokenExpirationTimer = null;
   }
 
   login(customer: CustomerLogin){
     return this._http.post(environment.apiUrl + environment.user + "/login", customer)
       .pipe(        
         catchError(this.handleError),
-        tap((response: AuthResponseData) => this.handleAuthentication(response.id, response.email, response.name, response.password, response.token, response.expiresIn)));
+        tap((response: AuthResponseData) => this.handleAuthentication(response.id, response.email, response.name, response.token, response.expiresIn, null, null, null)));
   }
 
   register(customer: CustomerSave){
     return this._http.post(environment.apiUrl + environment.user + "/register", customer)
-      .pipe(catchError(this.handleError),
-      tap((response: AuthResponseData) => this.handleAuthentication(response.id, response.email, response.name, response.password, response.token, response.expiresIn)));
+      .pipe(
+        catchError(this.handleError),
+        tap((response: AuthResponseData) => this.handleAuthentication(response.id, response.email, response.name, response.token, response.expiresIn, null, null, null)));
   }
 
   save(customer: CustomerSave){
     return this._http.post(environment.apiUrl + environment.user, customer)
-      .pipe(catchError(this.handleError), 
-      tap(response => this.customer.next(new Customer(customer.id, customer.name, customer.password, customer.email, this.customer.value.token, null))));
+      .pipe(catchError(this.handleError));
+  }
+
+  getProfile(){
+    return this._http.post(environment.apiUrl + environment.user + "/get", 
+      new CustomerGetProfile(this.customer.value.email, this.customer.value.id))
+      .pipe(
+        catchError(this.handleError),
+        tap((response:GetResponseData) => this.handleAuthentication(this.customer.value.id, this.customer.value.email, 
+          this.customer.value.name, response.token, response.expiresIn, response.password, response.address, response.payment)));
   }
 }

@@ -1,12 +1,14 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 const routes: Routes = [
   {path: '', loadChildren: () => import('./home/home.module').then(m => m.HomeModule)},
   {path: 'management', loadChildren: () => import('./management/management.module').then(m => m.ManagementModule)},
   {path: 'meal', loadChildren: () => import('./meal-details/meal-details.module').then(m => m.MealDetailsModule)},
   {path: 'customer', loadChildren: () => import('./customer/customer.module').then(m => m.CustomerModule)},
-  {path: 'cart', loadChildren: () => import('./cart/cart.module').then(m => m.CartModule)}
+  {path: 'cart', loadChildren: () => import('./cart/cart.module').then(m => m.CartModule)},
+  {path: '**', component: PageNotFoundComponent}
 ];
 
 @NgModule({
