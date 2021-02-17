@@ -21,7 +21,7 @@ export class LoginComponent implements OnInit {
     private _customerService: CustomerService,
     private _router: Router,
     private _route: ActivatedRoute,
-    private _notification: NotificationService
+    private _notificationService: NotificationService
   ) {}
 
   ngOnInit(): void {
@@ -48,13 +48,13 @@ export class LoginComponent implements OnInit {
     );
 
     this._customerService.login(customer).subscribe(
-      result => {
+      () => {
         this._router.navigateByUrl("/" + this.redirectUrl.replace("+","/")); 
-        this._notification.sendMessage(new NotificationMessage("Logged successfully", NotificationType.success))
+        this._notificationService.sendMessage(new NotificationMessage("Logged successfully", NotificationType.success))
         this.isLogging = false;
       },
       error => {
-        this._notification.sendMessage(new NotificationMessage(error, NotificationType.error));
+        this._notificationService.sendMessage(new NotificationMessage(error, NotificationType.error));
         this.isLogging = false;
       }
     );

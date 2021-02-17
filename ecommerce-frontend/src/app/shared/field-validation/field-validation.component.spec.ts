@@ -1,4 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { AbstractControl, FormControl, Validators } from '@angular/forms';
 
 import { FieldValidationComponent } from './field-validation.component';
 
@@ -16,6 +17,8 @@ describe('FieldValidationComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(FieldValidationComponent);
     component = fixture.componentInstance;
+    var formControl = new FormControl();
+    component.field = formControl;
     fixture.detectChanges();
   });
 

@@ -16,7 +16,7 @@ import { switchMap } from 'rxjs/operators';
 export class ProfileComponent implements OnInit {
 
   form: FormGroup;
-  isLogging = false;
+  isSaving = false;
 
   private _customerId: number;
   private _email: string;
@@ -30,9 +30,7 @@ export class ProfileComponent implements OnInit {
   }
 
   private initForm(): void{
-    
-
-    this._customerService.getProfile().pipe(switchMap(() => this._customerService.customer)).subscribe((customer: Customer)=>{
+    this._customerService.getProfile().pipe(switchMap(() => { return this._customerService.customer})).subscribe((customer: Customer)=>{
       this._customerId = customer.id;
       this._email = customer.email;
       let address = customer.address ? customer.address : new Address(null, null, null, null, null, null);
@@ -62,7 +60,7 @@ export class ProfileComponent implements OnInit {
   }
 
   save(): void{
-    this.isLogging = true;
+    this.isSaving = true;
 
     var customer = new CustomerSave(
       this._customerId, 
@@ -76,11 +74,11 @@ export class ProfileComponent implements OnInit {
     this._customerService.save(customer).subscribe(
       result => { 
         this._notification.sendMessage(new NotificationMessage("Profile updated successfully", NotificationType.success));
-        this.isLogging = false;
+        this.isSaving = false;
     },
       error => {
         this._notification.sendMessage(new NotificationMessage(error, NotificationType.error));
-        this.isLogging = false;
+        this.isSaving = false;
       }
     );
   }

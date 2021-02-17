@@ -1,6 +1,12 @@
 <img src="assets/img/home.jpg" class="spotlight" alt="spotlight">
 
-<h1 class="title display-4 font-weight-bold">The Healthy Food you Need <br> With the Tasty You Want</h1>
+<h1 class="title display-4 font-weight-bold">
+    <div class="row">
+        <div class="col-1 col-md-5">
+        </div>
+        <div class="col-11 col-md-7" id="website-title">The Healthy Food you Need With the Taste You Want</div>
+    </div>
+</h1>
 <div class="container">
     <div class="row">
         <div class="col-12">
@@ -11,5 +17,23 @@
             <hr>
         </div>
     </div>
-    <app-meal-list></app-meal-list>
+    <div id="meals" class="row" *ngIf="meals.length > 0; else message">
+        <div class="col-12 col-md-6 col-lg-4" *ngFor="let meal of meals">
+            <app-meal [meal]="meal"></app-meal>
+        </div>
+    </div>
+    
+    <ng-template #message>
+        <div class="container content-inner-pages">
+            <div class="row text-center" style="margin-top: 50%;">
+                <div class="col-12">
+                    <h2>Meals not found</h2>
+                    <hr>
+                </div>
+                <div class="col-12">
+                    <a [routerLink]="['/']" class="btn btn-primary"><i class="fas fa-arrow-left mr-1"></i>Back to the Meals</a>
+                </div>
+            </div>        
+        </div>
+    </ng-template>
 </div>

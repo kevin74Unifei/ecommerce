@@ -116,19 +116,21 @@
                 </div>
             </div>
             <div class="col-12 col-md-4">
-                <div class="card z-depth-2">
+                <div class="card z-depth-2 order-summary">
                     <div class="card-body">
                         <h4 class="card-title">
                             <i class="fas fa-star mr-2"></i>
                             Order Summary
                         </h4>
                         <hr>
-                        <div class="row" *ngFor="let selectedMeal of selectedMeals">
-                            <div class="col-8">
-                                <p class="card-text">({{selectedMeal.amount}}) {{selectedMeal.meal.name}}</p>
-                            </div>
-                            <div class="col-4 text-right">
-                                <p class="card-text text-success">{{selectedMeal.meal.price * selectedMeal.amount | currency}}</p>
+                        <div class="meals overflow-auto">
+                            <div class="row" *ngFor="let selectedMeal of selectedMeals">
+                                <div class="col-8">
+                                    <p class="card-text">({{selectedMeal.amount}}) {{selectedMeal.meal.name}}</p>
+                                </div>
+                                <div class="col-4 text-right">
+                                    <p class="card-text text-success">{{selectedMeal.meal.price * selectedMeal.amount | currency}}</p>
+                                </div>
                             </div>
                         </div>
                         <div class="row">
@@ -157,7 +159,7 @@
                                 <h4 class="card-title font-weight-bold text-success">{{getTotal() | currency}}</h4>
                             </div>
                             <div class="col-12 text-center">
-                                <button *ngIf="!isLogging; else loading" [disabled]="!form.valid || selectedMeals.length == 0" class="btn amber darken-1"><i class="fas fa-check left mr-1"></i> Finish Order</button>
+                                <button id="order-btn" *ngIf="!isLogging; else loading" [disabled]="!form.valid || selectedMeals.length == 0" class="btn amber darken-1"><i class="fas fa-check left mr-1"></i> Finish Order</button>
                                 <ng-template #loading>
                                     <app-loading-button></app-loading-button>
                                 </ng-template>

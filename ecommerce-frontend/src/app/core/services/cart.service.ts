@@ -12,7 +12,7 @@ export class CartService {
 
   constructor() { }
 
-  addProduct(meal: Meal, amount:number = 1):void{
+  addProduct(meal: Meal, amount:number = 1): void{
     let products = this.products.value.slice();
     let exists = false;
     

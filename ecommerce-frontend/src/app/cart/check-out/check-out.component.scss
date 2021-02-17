@@ -1,0 +1,11 @@
+
+@media(min-width: 760px){
+    .order-summary{
+        height: 30.7rem;
+    }
+
+    .order-summary .meals{
+        height: 35%;
+        overflow-x: hidden !important;
+    }
+}

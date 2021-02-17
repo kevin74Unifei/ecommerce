@@ -1,7 +1,7 @@
-$img-width: 60vh;
+$img-height: 55vh;
 img{
-    height: $img-width;
-    width: 120%;
+    height: $img-height;
+    width: 100%;
 }
 
 .carousel img{
@@ -17,6 +17,16 @@ img{
     .info{
         position: absolute;
         z-index: 10;
-        top: ($img-width + 13vh);
+        top: ($img-height + 13vh);
+    }
+}
+
+@media(max-width: 760px){
+    img{
+        height: 30vh !important;
+    }
+
+    .md-form{
+        margin: 0px;
     }
 }

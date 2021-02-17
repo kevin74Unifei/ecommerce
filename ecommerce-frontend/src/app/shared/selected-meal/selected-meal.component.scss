@@ -1,0 +1,15 @@
+img{
+    height: 100%;
+    width: 100%;
+}
+
+@media(max-width: 760px){
+    img{
+        height: 24vh;
+        width: 100%;
+    }
+
+    .md-form{
+        margin: 2px 0;
+    }
+}

@@ -18,7 +18,7 @@ import { OrdersComponent } from './orders/orders.component';
     CommonModule,
     SharedModule,
     RouterModule,
-    MDBBootstrapModule,
+    MDBBootstrapModule.forRoot(),
     CustomerRoutingModule
   ]
 })

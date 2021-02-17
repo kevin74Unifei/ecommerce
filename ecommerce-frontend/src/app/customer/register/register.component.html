@@ -16,7 +16,7 @@
                                         <div class="col-1">
                                             <mdb-icon fas icon="user" class="prefix"></mdb-icon>
                                         </div>
-                                        <div class="col-11">
+                                        <div class="col-10">
                                             <input mdbInput mdbValidate formControlName="name" minLength="3" maxLength="50" type="text"
                                             class="form-control" id="name">
                                             <label for="name">Name</label>
@@ -31,7 +31,7 @@
                                         <div class="col-1">
                                             <mdb-icon fas icon="envelope" class="prefix"></mdb-icon>
                                         </div>
-                                        <div class="col-11">
+                                        <div class="col-10">
                                             <input mdbInput mdbValidate formControlName="email" minLength="6" maxLength="25" type="email"
                                             class="form-control" id="email">
                                             <label for="email">E-mail</label>
@@ -46,7 +46,7 @@
                                         <div class="col-1">
                                             <mdb-icon fas icon="lock" class="prefix"></mdb-icon>
                                         </div>
-                                        <div class="col-11">
+                                        <div class="col-10">
                                             <input mdbInput mdbValidate formControlName="password" minlength="4" maxLength="25" type="password"
                                                 class="form-control" id="password">
                                             <label for="password">Password</label>
@@ -56,7 +56,7 @@
                                 </div>
                             </div>
                             <div class="col-12">
-                                <button *ngIf="!isLogging; else loading" class="btn amber darken-1"><i class="fas fa-door-open mr-1"></i>Register</button>
+                                <button id="register-btn" *ngIf="!isLogging; else loading" class="btn amber darken-1"><i class="fas fa-door-open mr-1"></i>Register</button>
                                 <ng-template #loading>
                                     <app-loading-button></app-loading-button>
                                 </ng-template>

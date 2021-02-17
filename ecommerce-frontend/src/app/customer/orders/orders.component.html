@@ -12,16 +12,16 @@
             <div class="col-12">
                 <mdb-breadcrumb>
                     <mdb-breadcrumb-item [routerLink]="['/']" class="blue-text">Home</mdb-breadcrumb-item>
+                    <mdb-breadcrumb-item class="active">Customer</mdb-breadcrumb-item>
                     <mdb-breadcrumb-item class="active">My Orders</mdb-breadcrumb-item>
                   </mdb-breadcrumb>
             </div>
         </div>
-        <div class="row" *ngFor="let order of orders">
-            <div class="col-md-2"></div>
-            <div class="col-12 col-md-8 align-middle">
+        <div class="row">
+            <div class="col-12 col-md-6 align-middle" *ngFor="let order of orders">
                 <div class="card mb-3 z-depth-2" style="max-width: 100%;">
-                    <div class="row g-0">
-                        <div class="col-12 col-lg-4">
+                    <div class="row g-0 order-item">
+                        <div class="col-12">
                             <mdb-carousel class="carousel slide carousel-fade" [animation]="'fade'">
                                 <mdb-carousel-item *ngFor="let selectedMeal of order.orderedMeals">
                                     <div class="view w-100">
@@ -42,19 +42,19 @@
                                 </mdb-carousel-item>
                             </mdb-carousel>                    
                         </div>
-                        <div class="col-12 col-lg-8">
+                        <div class="col-12">
                             <div class="card-body text-center">
                                 <div class="row">
                                     <div class="col-12">
-                                        <h5 class="card-title">Order Number: {{order.id}}</h5> 
+                                        <h5 class="card-title">Order Number: <b class="blue-grey-text">{{order.id}}</b></h5> 
                                         <hr>                                     
                                     </div>                                
-                                    <div class="col-12 col-md-8">
+                                    <div class="col-12 col-md-7">
                                         <p>
-                                            Made at: {{order.creationDate | date: 'medium'}}
+                                            Made at: <b class="deep-orange-text">{{order.creationDate | date: 'medium'}}</b>
                                         </p>
                                     </div>
-                                    <div class="col-12 col-md-4">
+                                    <div class="col-12 col-md-5">
                                         <h6>Status: <b class="text-success">{{order.status}}</b></h6>                                            
                                     </div>
                                     <div class="col-12 text-center">
@@ -70,7 +70,7 @@
     </div>
     
     <ng-template #message>
-        <div class="container content-inner-pages">
+        <div class="container content-inner-pages" id="empty-orders-message">
             <div class="row text-center" style="margin-top: 25vh;">
                 <div class="col-12">
                     <h2>You don't have any orders</h2>
@@ -84,7 +84,7 @@
     </ng-template>
 </div>
 <ng-template #loading>
-    <div class="container">
+    <div class="container" id="loader">
         <div class="row d-flex align-items-center">
             <div class="col">
                 <div class="flex-center align-middle">

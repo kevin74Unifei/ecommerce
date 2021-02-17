@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { NotificationMessage, NotificationType } from '@core/models/notificationMessage.model';
 import { OrderedMealDetailed, OrderStored } from '@core/models/order.model';
 import { CustomerService } from '@core/services/customer.service';
+import { NotificationService } from '@core/services/notification.service';
 import { OrderService } from '@core/services/order.service';
 import { environment } from '@env';
 
@@ -16,7 +18,8 @@ export class OrdersComponent implements OnInit {
 
   constructor(
     private _orderService: OrderService,
-    private _customerService: CustomerService
+    private _customerService: CustomerService,
+    private _notificationService: NotificationService
   ) {}
 
   ngOnInit(): void {
@@ -24,7 +27,8 @@ export class OrdersComponent implements OnInit {
       .subscribe(orders => {
         this.orders = orders; 
         this.isLoading = false
-      },errors => {
+      },error => {
+        this._notificationService.sendMessage(new NotificationMessage(error, NotificationType.error));
         this.isLoading = false
       });
   }
