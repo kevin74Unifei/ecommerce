@@ -47,7 +47,7 @@
                                             <mdb-icon fas icon="lock" class="prefix"></mdb-icon>
                                         </div>
                                         <div class="col-10">
-                                            <input mdbInput mdbValidate formControlName="password" minlength="4" maxLength="25" type="password"
+                                            <input mdbInput mdbValidate formControlName="password" minlength="8" maxLength="25" type="password"
                                                 class="form-control" id="password">
                                             <label for="password">Password</label>
                                             <app-field-validation [field]="form.get('password')" [errorMessage]="'Password invalid'"></app-field-validation>

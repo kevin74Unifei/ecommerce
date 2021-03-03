@@ -8,6 +8,7 @@ import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { RouterModule } from '@angular/router';
 import { ProfileComponent } from './profile/profile.component';
 import { OrdersComponent } from './orders/orders.component';
+import { NgxMaskModule } from 'ngx-mask';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { OrdersComponent } from './orders/orders.component';
     SharedModule,
     RouterModule,
     MDBBootstrapModule.forRoot(),
-    CustomerRoutingModule
+    CustomerRoutingModule,
+    NgxMaskModule.forRoot(),
   ]
 })
 export class CustomerModule { }

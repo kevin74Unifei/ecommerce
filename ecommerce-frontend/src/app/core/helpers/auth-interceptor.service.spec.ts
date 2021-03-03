@@ -37,7 +37,7 @@ describe('AuthInterceptor', () => {
     });
 
     const req = httpMock.expectOne({
-      url: `${environment.apiUrl}${environment.user}/login`,
+      url: `${environment.ecommerceUrl}/${environment.customer}/login`,
       method : "POST"
     });
 
@@ -51,7 +51,7 @@ describe('AuthInterceptor', () => {
     });
 
     const req = httpMock.expectOne({
-      url: `${environment.apiUrl}${environment.user}/get`,
+      url: `${environment.ecommerceUrl}/${environment.customer}/get`,
       method: "POST"
     });
 

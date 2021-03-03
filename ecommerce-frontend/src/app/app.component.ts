@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CustomerService } from '@core/services/customer.service';
+import { GoogleTagManagerService } from 'angular-google-tag-manager';
 
 @Component({
   selector: 'app-root',
@@ -9,9 +10,12 @@ import { CustomerService } from '@core/services/customer.service';
 export class AppComponent implements OnInit {
   title = 'Ecommerce';
 
-  constructor(private _customerService: CustomerService){}
+  constructor(
+    private _customerService: CustomerService,
+    private _gtmService: GoogleTagManagerService){}
 
   ngOnInit(){
     this._customerService.autoLogin();
+    this._gtmService.addGtmToDom();
   }
 }

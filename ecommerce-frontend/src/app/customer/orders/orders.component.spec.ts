@@ -65,7 +65,7 @@ describe('OrdersComponent', () => {
     let imageName = "image.png";
     let id = 1; 
 
-    expect(`${environment.apiUrl}${environment.mealUrl}/image/${id}/${imageName}`)
+    expect(`${environment.ecommerceUrl}/${environment.meal}/image/${id}/${imageName}`)
       .toEqual(component.getImage(id, imageName));
   });
 

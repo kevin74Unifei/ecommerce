@@ -17,12 +17,12 @@ export class MealService {
   }
 
   getMeals(){
-    return this._http.get<Meal[]>(environment.apiUrl + environment.mealUrl)
+    return this._http.get<Meal[]>(`${environment.ecommerceUrl}/${environment.meal}`)
       .pipe(catchError(this.handleError));
   }
 
   getMeal(id: number){
-    return this._http.get<Meal>(environment.apiUrl + environment.mealUrl + "/" + id)
+    return this._http.get<Meal>(`${environment.ecommerceUrl}/${environment.meal}/${id}`)
       .pipe(catchError(this.handleError));
   }
 
@@ -34,7 +34,11 @@ export class MealService {
       formData.append("files", image);
     })
 
-    return this._http.post(environment.apiUrl + environment.mealUrl, formData)
+    return this._http.post(`${environment.ecommerceUrl}/${environment.meal}`, formData)
       .pipe(catchError(this.handleError));
+  }
+
+  getMealImage(id: number, imageName: string): string{
+    return `${environment.ecommerceUrl}/${environment.meal}/image/${id}/${imageName}`;
   }
 }

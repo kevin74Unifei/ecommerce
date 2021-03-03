@@ -45,7 +45,7 @@ describe('OrderService', () => {
     });
 
     const req = httpMock.expectOne({
-      url: `${environment.apiUrl}${environment.order}`,
+      url: `${environment.ecommerceUrl}/${environment.order}`,
       method: "POST"
     });
   });
@@ -58,7 +58,7 @@ describe('OrderService', () => {
     });
 
     const req = httpMock.expectOne({
-      url: `${environment.apiUrl}${environment.order}/getOrders`,
+      url: `${environment.ecommerceUrl}/${environment.order}/getOrders`,
       method: "POST"
     });
 

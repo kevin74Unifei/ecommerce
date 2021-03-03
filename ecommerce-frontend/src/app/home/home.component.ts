@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { Meal } from '@core/models/meal.model';
 import { NotificationMessage, NotificationType } from '@core/models/notificationMessage.model';
 import { MealService } from '@core/services/meal.service';
@@ -15,7 +16,8 @@ export class HomeComponent implements OnInit {
 
   constructor(
     private mealService: MealService,
-    private _notificationService: NotificationService
+    private _notificationService: NotificationService,
+    private _titleService: Title
   ) { }
 
   ngOnInit(): void {
@@ -24,6 +26,8 @@ export class HomeComponent implements OnInit {
     }, error => {
       this._notificationService.sendMessage(new NotificationMessage(error, NotificationType.error));
     });
+
+    this._titleService.setTitle("Ecommerce")
   }
 
 }

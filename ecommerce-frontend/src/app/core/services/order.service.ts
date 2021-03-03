@@ -31,12 +31,12 @@ export class OrderService {
     selectedMeals.forEach(selectedMeal => orderedMeals.push(new OrderedMeal(selectedMeal.meal.id, selectedMeal.amount)));
 
     var order = new Order(null, customer.id, address, payment, orderedMeals, null);
-    return this._http.post(environment.apiUrl + environment.order, order)
-      .pipe(catchError(this.handleError), tap(result => this._cartService.clearCart()));
+    return this._http.post(`${environment.ecommerceUrl}/${environment.order}`, order)
+      .pipe(catchError(this.handleError), tap(() => this._cartService.clearCart()));
   }
 
   getOrders(customerId: number){
-    return this._http.post<OrderStored[]>(environment.apiUrl + environment.order + "/getOrders", {"customerId": customerId})
+    return this._http.post<OrderStored[]>(`${environment.ecommerceUrl}/${environment.order}/getOrders`, {"customerId": customerId})
       .pipe(catchError(this.handleError));
   }
 }

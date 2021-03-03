@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Meal } from '@core/models/meal.model';
 import { NotificationMessage, NotificationType } from '@core/models/notificationMessage.model';
 import { CartService } from '@core/services/cart.service';
 import { MealService } from '@core/services/meal.service';
 import { NotificationService } from '@core/services/notification.service';
-import { environment } from '@env';
 
 @Component({
   selector: 'app-meal-details',
@@ -22,7 +22,8 @@ export class MealDetailsComponent implements OnInit {
     private _route: ActivatedRoute,
     private _mealService: MealService,
     private _cartService: CartService,
-    private _notificationService: NotificationService
+    private _notificationService: NotificationService,
+    private _titleService: Title
   ) {}
 
   ngOnInit(): void {
@@ -35,18 +36,20 @@ export class MealDetailsComponent implements OnInit {
   private getMeal(): void {
     this._mealService.getMeal(this._id).subscribe((result:Meal) => {
       this.meal = result;
+      this._titleService.setTitle(this.meal.name);
+
       this.form = new FormGroup({
         amount: new FormControl(1, [Validators.required, Validators.min(1), Validators.max(this.meal.amount)])
       });
     }, error => {
-      console.log(error);
+      this._notificationService.sendMessage(new NotificationMessage(error, NotificationType.error));
     })
   }
 
   get amount() { return this.form.get('amount'); }
 
   getImage(id: number, imageName: string): string{
-    return environment.apiUrl + environment.mealUrl + "/image/" + id + "/" + imageName;
+    return this._mealService.getMealImage(id, imageName);
   }
 
   addToCart(){

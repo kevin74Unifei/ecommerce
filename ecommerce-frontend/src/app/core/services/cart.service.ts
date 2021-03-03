@@ -54,4 +54,11 @@ export class CartService {
   clearCart(): void{
     this.products.next([]);
   }
+
+  getTotal(): number{
+    let total: number = 0;
+    this.products.value.map(selectedMeal => total += selectedMeal.meal.price * selectedMeal.amount);
+
+    return total;
+  }
 }

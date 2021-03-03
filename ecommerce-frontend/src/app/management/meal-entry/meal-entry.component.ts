@@ -35,10 +35,8 @@ export class MealEntryComponent implements OnInit {
     this.form = new FormGroup({
       'id': new FormControl('', [Validators.required, Validators.min(0)]),
       'name': new FormControl('', [Validators.required, Validators.minLength(0), Validators.maxLength(100)]),
-      'category': new FormControl('', [Validators.required, Validators.min(0)]),
       'amount': new FormControl('', [Validators.required, Validators.min(0)]),
       'price': new FormControl('', [Validators.required, Validators.min(0)]),
-      'promotionPrice': new FormControl(''),
       'daysToExpire': new FormControl('', [Validators.required, Validators.min(0)]),
       'description': new FormControl('', [Validators.required, Validators.maxLength(500)]),
       'instructions': new FormArray([]),
@@ -79,7 +77,7 @@ export class MealEntryComponent implements OnInit {
 
     var meal:Meal = new Meal(
       this.form.value['id'],
-      this.form.value['category'],
+      1,
       this.form.value['name'], 
       this.form.value['amount'],
       this.form.value['price'],

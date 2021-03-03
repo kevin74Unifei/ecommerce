@@ -6,19 +6,34 @@
     <form [formGroup]="form" (ngSubmit)="submitMeal()">
 
         <div class="form-row">
-            <div class="col-sm-4 col-md-2 col-lg-1 form-group">
+            <div class="col-2 col-md-2 col-lg-1 md-form">
                 <label for="id">Id: </label>
-                <input type="number" id="id" formControlName="id" class="form-control">
+                <input mdbInput type="number" id="id" formControlName="id" class="form-control">
             </div>
-            <div class="col-sm-12 col-md-6 col-lg-9 form-group">
+            <div class="col-10 col-md-6 col-lg-9 md-form">
                 <label for="name">Name:</label>
-                <input type="text" id="name" formControlName="name" class="form-control">
+                <input mdbInput type="text" id="name" formControlName="name" class="form-control">
             </div>
-            <div class="col-sm-4 col-md-2 col-lg-1 form-group">
-                <label for="category">Category: </label>
-                <input type="number" id="category" formControlName="category" class="form-control">
+            
+            <div class="col-12 col-md-2 md-form">
+                <label for="amount">Days to expire: </label>
+                <input mdbInput type="number" id="daysToExpire" formControlName="daysToExpire" class="form-control">
             </div>
-            <div class="col-sm-4 col-md-2 col-lg-1 form-group">
+        </div>
+        <div class="form-row">
+            <div class="col-12 col-md-5 md-form">
+                <label for="description">Description: </label>
+                <textarea mdbInput mdbCharCounter  id="description" formControlName="description" rows="1" type="text" class="md-textarea form-control"></textarea>
+            </div>
+            <div class="col-8 col-md-3 md-form">
+                <label for="price">Price: </label>
+                <input mdbInput type="number" id="price" formControlName="price" class="form-control">
+            </div>
+            <div class="col-4 col-md-2 md-form">
+                <label for="amount">Amount: </label>
+                <input mdbInput  type="number" id="amount" formControlName="amount" class="form-control">
+            </div>
+            <div class="col-12 col-md-2 form-group d-flex justify-content-center">
                 <div class="custom-control custom-switch" style="padding-top: 2.5em;">
                     <input type="checkbox" id="enabled" formControlName="enabled" class="custom-control-input">
                     <label for="enabled" class="custom-control-label">Enabled</label>
@@ -26,47 +41,25 @@
             </div>
         </div>
         <div class="form-row">
-            <div class="col-sm-12 col-md-5 col-lg-5 form-group">
-                <label for="description">Description: </label>
-                <textarea id="description" formControlName="description" cols="1" rows="1" class="form-control"></textarea>
-            </div>
-            <div class="col-sm-4 col-md-2 col-lg-2 form-group">
-                <label for="price">Price: </label>
-                <input type="number" id="price" formControlName="price" class="form-control">
-            </div>
-            <div class="col-sm-4 col-md-2 col-lg-2 form-group">
-                <label for="promotionPrice">Promotion Price: </label>
-                <input type="number" id="promotionPrice" formControlName="promotionPrice" class="form-control">
-            </div>
-            <div class="col-sm-2 col-md-1 col-lg-1 form-group">
-                <label for="amount">Amount: </label>
-                <input type="number" id="amount" formControlName="amount" class="form-control">
-            </div>
-            <div class="col-sm-2 col-md-2 col-lg-2 form-group">
-                <label for="amount">Days to expire: </label>
-                <input type="number" id="daysToExpire" formControlName="daysToExpire" class="form-control">
-            </div>
-        </div>
-        <div class="form-row">
             <div class="col-12">
                 <h4>Pictures: </h4>
                 <hr/>
             </div>
-            <div class="col-sm-12 col-md-6 col-lg-6 form-group">
+            <div class="col-12 col-md-6 col-lg-4 md-form">
                 <div class="custom-file">
-                    <input type="file" class="custom-file-input" id="image1" formControlName="image1" (change)="onImage1Upload($event.target.files)">
+                    <input mdbInput type="file" class="custom-file-input" id="image1" formControlName="image1" (change)="onImage1Upload($event.target.files)">
                     <label class="custom-file-label" #labelImport1 for="image1">Choose file</label>
                 </div>
             </div>
-            <div class="col-sm-12 col-md-6 col-lg-6 form-group">
+            <div class="col-12 col-md-6 col-lg-4 md-form">
                 <div class="custom-file">
-                    <input type="file" class="custom-file-input" id="image2" formControlName="image2" (change)="onImage2Upload($event.target.files)">
+                    <input mdbInput type="file" class="custom-file-input" id="image2" formControlName="image2" (change)="onImage2Upload($event.target.files)">
                     <label class="custom-file-label" #labelImport2 for="image2">Choose file</label>
                 </div>
             </div>
-            <div class="col-sm-12 col-md-6 col-lg-6 form-group">
+            <div class="col-12 col-md-6 col-lg-4 md-form">
                 <div class="custom-file">
-                    <input type="file" class="custom-file-input" id="image3" formControlName="image3" (change)="onImage3Upload($event.target.files)">
+                    <input mdbInput type="file" class="custom-file-input" id="image3" formControlName="image3" (change)="onImage3Upload($event.target.files)">
                     <label class="custom-file-label" #labelImport3 for="image3">Choose file</label>
                 </div>
             </div>

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { CustomerLogin } from '@core/models/customer.model';
 import { NotificationMessage, NotificationType } from '@core/models/notificationMessage.model';
@@ -21,7 +22,8 @@ export class LoginComponent implements OnInit {
     private _customerService: CustomerService,
     private _router: Router,
     private _route: ActivatedRoute,
-    private _notificationService: NotificationService
+    private _notificationService: NotificationService,
+    private _titleService: Title
   ) {}
 
   ngOnInit(): void {
@@ -31,12 +33,13 @@ export class LoginComponent implements OnInit {
     });
 
     this.initForm();
+    this._titleService.setTitle("Login");
   }
 
   private initForm(): void{
     this.form = new FormGroup({
       email : new FormControl('', [Validators.required, Validators.email]),
-      password: new FormControl('', [Validators.required])
+      password: new FormControl('', [Validators.required, Validators.minLength(8), Validators.maxLength(25)])
     });
   }
 

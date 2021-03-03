@@ -1,6 +1,7 @@
 import { HttpHandler, HttpHeaders, HttpInterceptor, HttpRequest } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { CustomerService } from "@core/services/customer.service";
+import { environment } from "@env";
 import { exhaustMap, take } from "rxjs/operators";
 
 @Injectable()
@@ -10,18 +11,21 @@ export class AuthInterceptorService implements HttpInterceptor{
     ){}
 
     intercept(request: HttpRequest<any>, next: HttpHandler){
-        return this._customerService.customer.pipe(
-            take(1),
-            exhaustMap(customer => {
-                if(!customer)
-                    return next.handle(request);
+        if(request.url.includes(environment.ecommerceUrl))
+            return this._customerService.customer.pipe(
+                take(1),
+                exhaustMap(customer => {
+                    if(!customer)
+                        return next.handle(request);
 
-                const modifiedRequest = request.clone({
-                    headers: new HttpHeaders().set('Authorization', customer.token)
-                });
-                
-                return next.handle(modifiedRequest);
-            })
-        )
+                    const modifiedRequest = request.clone({
+                        headers: new HttpHeaders().set('Authorization', customer.token)
+                    });
+                    
+                    return next.handle(modifiedRequest);
+                })
+            );
+        
+        return next.handle(request);        
     }
 }

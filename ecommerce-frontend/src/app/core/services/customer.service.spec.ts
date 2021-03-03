@@ -52,7 +52,7 @@ describe('CustomerService', () => {
     });
 
     const req = httpMock.expectOne({
-      url: `${environment.apiUrl}${environment.user}/login`,
+      url: `${environment.ecommerceUrl}/${environment.customer}/login`,
       method : "POST"
     });
 
@@ -65,7 +65,7 @@ describe('CustomerService', () => {
       });
 
     const req = httpMock.expectOne({
-      url: `${environment.apiUrl}${environment.user}/register`,
+      url: `${environment.ecommerceUrl}/${environment.customer}/register`,
       method: "POST"
     });
 
@@ -79,7 +79,7 @@ describe('CustomerService', () => {
     });
 
     const req = httpMock.expectOne({
-      url: `${environment.apiUrl}${environment.user}/get`,
+      url: `${environment.ecommerceUrl}/${environment.customer}/get`,
       method: "POST"
     });
 
@@ -87,13 +87,12 @@ describe('CustomerService', () => {
   });
 
   it('should save the profile', () => {
-    var obj: Object = new Object();
     service.save(new CustomerSave(0, 'name', 'email', 'password', dummyAddress, dummyPayment)).subscribe(response => {
       expect(response).toEqual(Object);
     });
 
     const req = httpMock.expectOne({
-      url: `${environment.apiUrl}${environment.user}`,
+      url: `${environment.ecommerceUrl}/${environment.customer}`,
       method: "POST"
     });
   });

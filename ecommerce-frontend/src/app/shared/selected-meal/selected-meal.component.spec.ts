@@ -49,7 +49,7 @@ describe('SelectedMealComponent', () => {
     const id = 1;
     const imageName = "meal.png";
 
-    expect(component.getImage(id, imageName)).toEqual(`${environment.apiUrl}${environment.mealUrl}/image/${id}/${imageName}`);
+    expect(component.getImage(id, imageName)).toEqual(`${environment.ecommerceUrl}/${environment.meal}/image/${id}/${imageName}`);
   });
 
   it('should update the amount', () => {

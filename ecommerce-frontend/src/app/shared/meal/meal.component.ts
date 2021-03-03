@@ -2,8 +2,8 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Meal } from '@core/models/meal.model';
 import { NotificationMessage, NotificationType } from '@core/models/notificationMessage.model';
 import { CartService } from '@core/services/cart.service';
+import { MealService } from '@core/services/meal.service';
 import { NotificationService } from '@core/services/notification.service';
-import { environment } from '@env'; 
 
 @Component({
   selector: 'app-meal',
@@ -16,6 +16,7 @@ export class MealComponent implements OnInit {
 
   constructor(
     private _cartService: CartService,
+    private _mealService: MealService,
     private _notificationService: NotificationService
   ) { }
 
@@ -23,7 +24,7 @@ export class MealComponent implements OnInit {
   }
 
   getImage(id: number, imageName: string): string{
-    return environment.apiUrl + environment.mealUrl + "/image/" + id + "/" + imageName;
+    return this._mealService.getMealImage(id, imageName);
   }
 
   addToCart(): void{

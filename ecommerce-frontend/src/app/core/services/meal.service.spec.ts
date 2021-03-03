@@ -34,7 +34,7 @@ describe('MealService', () => {
     });
 
     const req = httpMock.expectOne({
-      url: `${environment.apiUrl}${environment.mealUrl}`,
+      url: `${environment.ecommerceUrl}/${environment.meal}`,
       method : "GET"
     });
 
@@ -47,7 +47,7 @@ describe('MealService', () => {
     });
 
     const req = httpMock.expectOne({
-      url: `${environment.apiUrl}${environment.mealUrl}/${1}`,
+      url: `${environment.ecommerceUrl}/${environment.meal}/${1}`,
       method : "GET"
     });
 
@@ -61,8 +61,16 @@ describe('MealService', () => {
     });
 
     const req = httpMock.expectOne({
-      url: `${environment.apiUrl}${environment.mealUrl}`,
+      url: `${environment.ecommerceUrl}/${environment.meal}`,
       method: "POST"
     });
+  });
+
+  it('should get an image url', () => {
+    let imageName = "image.png";
+    let id = 1; 
+
+    expect(`${environment.ecommerceUrl}/${environment.meal}/image/${id}/${imageName}`)
+      .toEqual(service.getMealImage(id, imageName));
   });
 });
