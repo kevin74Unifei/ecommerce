@@ -19,7 +19,7 @@ describe('RegisterComponent', () => {
   const dummyReturnUrlParam = 'cart';
   const dummyEmail = 'test@email.com';
   const dummyName = 'test name';
-  const dummyPassword = 'fad23Lsa';
+  const dummyPassword = 'passW0rd!';
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({

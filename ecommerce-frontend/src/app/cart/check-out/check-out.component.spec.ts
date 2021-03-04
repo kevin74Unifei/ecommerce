@@ -30,8 +30,8 @@ describe('CheckOutComponent', () => {
     name: 'Harry',
     password: 'Password',
     email: 'harry@email.com',
-    address: new Address('123456', 'Brazil', 'SP', 'São Paulo', 'Paulista', 'Center'),
-    payment: new Payment('1', 'Harry Bale', 124135312, '03/27', '456', 'Brazil', '123456')
+    address: new Address('12345', 'Brazil', 'SP', 'São Paulo', 'Paulista', 'Center'),
+    payment: new Payment('1', 'Harry Bale', 123456789012, '0327', '456', 'Brazil', '12345')
   };
   const dummyCustomer = new Customer(dummyProfile.id, null, dummyProfile.email, 'token', new Date());
   const dummySelectedMeals = [
@@ -142,6 +142,7 @@ describe('CheckOutComponent', () => {
     paymentSecurityCodeInput.setValue(dummyProfile.payment.securityCode);
 
     spyOn(orderService, 'addOrder').and.callFake(() => new Observable);
+    console.log(component.form);
     component.finishOrder();
     
     fixture.detectChanges();

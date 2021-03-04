@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Title } from '@angular/platform-browser';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { CustomerSave } from '@core/models/customer.model';
 import { NotificationMessage, NotificationType } from '@core/models/notificationMessage.model';
@@ -21,7 +22,8 @@ export class RegisterComponent implements OnInit {
     private _customerService: CustomerService,
     private _router: Router,
     private _route: ActivatedRoute,
-    private _notification: NotificationService
+    private _notification: NotificationService,
+    private _titleService: Title
   ) {}
 
   ngOnInit(): void {
@@ -31,6 +33,7 @@ export class RegisterComponent implements OnInit {
     });
 
     this.initForm();
+    this._titleService.setTitle("Register");
   }
 
   private initForm(): void{

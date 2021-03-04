@@ -46,7 +46,6 @@ describe('MealEntryComponent', () => {
 
     const idInput = compiled.querySelector('input[id="id"]');
     const nameInput = compiled.querySelector('input[id="name"]');
-    const categoryInput = compiled.querySelector('input[id="category"]');
     const enabledInput = compiled.querySelector('input[id="enabled"]');
     const descriptionInput = compiled.querySelector('textarea[id="description"]');
     const priceInput = compiled.querySelector('input[id="price"]');
@@ -58,7 +57,6 @@ describe('MealEntryComponent', () => {
 
     expect(idInput).toBeTruthy();
     expect(nameInput).toBeTruthy();
-    expect(categoryInput).toBeTruthy();
     expect(enabledInput).toBeTruthy();
     expect(descriptionInput).toBeTruthy();
     expect(priceInput).toBeTruthy();
@@ -73,7 +71,6 @@ describe('MealEntryComponent', () => {
     const form = component.form;
     const idInput = form.controls.id;
     const nameInput = form.controls.name; 
-    const categoryInput = form.controls.category;
     const amountInput = form.controls.amount;
     const priceInput = form.controls.price;
     const daysToExpireInput = form.controls.daysToExpire;
@@ -87,9 +84,6 @@ describe('MealEntryComponent', () => {
 
     expect(form.valid).toBeFalsy();
     nameInput.setValue(dummyMeal.name);
-
-    expect(form.valid).toBeFalsy();
-    categoryInput.setValue(dummyMeal.category);
     
     expect(form.valid).toBeFalsy();
     amountInput.setValue(dummyMeal.amount);
@@ -119,7 +113,6 @@ describe('MealEntryComponent', () => {
     const form = component.form;
     const idInput = form.controls.id;
     const nameInput = form.controls.name; 
-    const categoryInput = form.controls.category;
     const amountInput = form.controls.amount;
     const priceInput = form.controls.price;
     const daysToExpireInput = form.controls.daysToExpire;
@@ -130,7 +123,6 @@ describe('MealEntryComponent', () => {
 
     expect(idInput.value).toBeFalsy();
     expect(nameInput.value).toBeFalsy();
-    expect(categoryInput.value).toBeFalsy();
     expect(amountInput.value).toBeFalsy();
     expect(priceInput.value).toBeFalsy();
     expect(daysToExpireInput.value).toBeFalsy();
@@ -141,7 +133,6 @@ describe('MealEntryComponent', () => {
 
     idInput.setValue(dummyMeal.id);
     nameInput.setValue(dummyMeal.name);
-    categoryInput.setValue(dummyMeal.category);
     amountInput.setValue(dummyMeal.amount);
     priceInput.setValue(dummyMeal.price);
     daysToExpireInput.setValue(dummyMeal.daysToExpire);
@@ -152,7 +143,6 @@ describe('MealEntryComponent', () => {
 
     expect(idInput.value).toBeTruthy();
     expect(nameInput.value).toBeTruthy();
-    expect(categoryInput.value).toBeTruthy();
     expect(amountInput.value).toBeTruthy();
     expect(priceInput.value).toBeTruthy();
     expect(daysToExpireInput.value).toBeTruthy();
@@ -166,7 +156,6 @@ describe('MealEntryComponent', () => {
     const form = component.form;
     const idInput = form.controls.id;
     const nameInput = form.controls.name; 
-    const categoryInput = form.controls.category;
     const amountInput = form.controls.amount;
     const priceInput = form.controls.price;
     const daysToExpireInput = form.controls.daysToExpire;
@@ -177,7 +166,6 @@ describe('MealEntryComponent', () => {
 
     idInput.setValue(dummyMeal.id);
     nameInput.setValue(dummyMeal.name);
-    categoryInput.setValue(dummyMeal.category);
     amountInput.setValue(dummyMeal.amount);
     priceInput.setValue(dummyMeal.price);
     daysToExpireInput.setValue(dummyMeal.daysToExpire);
