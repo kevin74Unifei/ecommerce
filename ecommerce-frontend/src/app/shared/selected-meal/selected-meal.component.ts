@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { SelectedMeal } from '@core/models/cart.model';
 import { CartService } from '@core/services/cart.service';
-import { environment } from '@env';
+import { MealService } from '@core/services/meal.service';
 
 @Component({
   selector: 'app-selected-meal',
@@ -15,7 +15,8 @@ export class SelectedMealComponent implements OnInit {
   form: FormGroup;
 
   constructor(
-    private _cartService: CartService
+    private _cartService: CartService,
+    private _mealService: MealService
   ) {}
 
   ngOnInit(): void {
@@ -25,7 +26,7 @@ export class SelectedMealComponent implements OnInit {
   }
 
   getImage(id: number, imageName: string): string{
-    return environment.apiUrl + environment.mealUrl + "/image/" + id + "/" + imageName;
+    return this._mealService.getMealImage(id, imageName);
   }
 
   get amount() { return this.form.get('amount'); }

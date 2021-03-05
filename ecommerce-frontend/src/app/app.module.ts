@@ -9,6 +9,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { CoreModule } from './core/core.module';
 import { ToastrModule } from 'ngx-toastr';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { environment } from '@env';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,9 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
     ToastrModule.forRoot(),
     CoreModule
   ],
-  providers: [],
+  providers: [
+    {provide: 'googleTagManagerId', useValue: environment.googleTagManagerId}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

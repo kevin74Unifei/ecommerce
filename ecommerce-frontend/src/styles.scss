@@ -1,10 +1,21 @@
 /* You can add global styles to this file, and also import other style files */
+@media(min-width: 760px){
+    .nav{
+        max-width: 60vw !important;
+        top: 0.5em;
+        margin: 0 auto;
+        opacity: 0.8;
+    }
+}
 
-.nav{
-    max-width: 50em !important;
-    top: 0.5em;
-    margin: 0 auto;
-    opacity: 0.8;
+@media(max-width: 760px){
+    .nav{
+        opacity: 0.8;
+    }
+}
+
+.navbar-toggler-icon{
+    background-image: url('assets/img/navbar.png');
 }
 
 .breadcrumb{

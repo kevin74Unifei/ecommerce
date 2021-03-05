@@ -1,0 +1,21 @@
+
+img{
+    height: 35vh;
+    width: 100%;
+}
+
+h4{
+    font-size: 1.3rem !important;
+}
+
+
+@media(max-width: 760px){
+    img{
+        height: 24vh;
+    }
+}
+
+.card{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}

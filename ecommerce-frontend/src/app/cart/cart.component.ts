@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { SelectedMeal } from '@core/models/cart.model';
 import { CartService } from '@core/services/cart.service';
@@ -16,22 +17,21 @@ export class CartComponent implements OnInit {
   constructor(
     private _cartService: CartService,
     private _customerService: CustomerService,
-    private _router: Router
+    private _router: Router,
+    private _titleService: Title
   ) {}
 
   ngOnInit(): void {
     this._cartService.products.subscribe(meals => this.selectedMeals = meals);
+    this._titleService.setTitle("Cart");
   }
 
   getTotal(): number{
-    var total = 0;
-    this.selectedMeals.forEach(selectedMeal => total += selectedMeal.meal.price * selectedMeal.amount)
-
-    return total;
+    return this._cartService.getTotal();
   }
 
   redirect(): void{
-    if(this._customerService.customer.value == null)
+    if(!this._customerService.customer.value)
       this._router.navigate(['/customer', 'login', 'cart+checkOut'])
     else
       this._router.navigate(['/cart', 'checkOut']);    

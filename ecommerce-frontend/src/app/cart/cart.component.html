@@ -15,8 +15,10 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-12 col-md-8">
-            <app-selected-meal-list [selectedMeals]="selectedMeals"></app-selected-meal-list>
+        <div class="col-12 col-md-8 selected-meals">
+            <div class="row" *ngFor="let selctedMeal of selectedMeals">
+                <app-selected-meal [selectedMeal]="selctedMeal"></app-selected-meal>
+            </div>
         </div>
         <div class="col-12 col-md-4">
             <div class="card z-depth-2">

@@ -15,7 +15,6 @@ export class NotificationService {
   }
 
   sendMessage(message: NotificationMessage): void{
-    console.log("oi");
     this._noficationSubject.next(message);
   }
 

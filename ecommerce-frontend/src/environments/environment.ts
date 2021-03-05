@@ -4,10 +4,15 @@
 
 export const environment = {
   production: false,
-  apiUrl: "//localhost:8080",
-  mealUrl: "/meal",
-  user: "/customer",
-  order: "/order"
+  ecommerceUrl: "//localhost:8080",
+  meal: "meal",
+  customer: "customer",
+  order: "order",
+  localStorageCustomer: 'customerData',
+  addressUrl: 'https://app.zipcodebase.com/api/v1',
+  addressApiKey: '30a566c0-737f-11eb-9c54-4f3216f45f33',
+  countryForZipCode: 'de',
+  googleTagManagerId: 'GTM-NDVHPSV'
 };
 
 /*

@@ -6,6 +6,7 @@ import { RouterModule } from '@angular/router';
 import { SharedModule } from '@shared/shared.module';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { CheckOutComponent } from './check-out/check-out.component';
+import { NgxMaskModule } from 'ngx-mask';
 
 @NgModule({
   declarations: [CartComponent, CheckOutComponent],
@@ -14,7 +15,8 @@ import { CheckOutComponent } from './check-out/check-out.component';
     SharedModule,
     RouterModule,
     CartRoutingModule,
-    MDBBootstrapModule.forRoot(),
+    MDBBootstrapModule.forRoot(),    
+    NgxMaskModule.forRoot()
   ]
 })
 export class CartModule { }

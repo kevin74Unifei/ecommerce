@@ -2,3 +2,9 @@ img{
     height: 24vh;
     width: 100% !important;
 }
+
+@media(min-width: 760px){
+    img{
+        height: 35vh;
+    }
+}

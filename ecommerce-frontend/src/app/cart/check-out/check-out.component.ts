@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { Address } from '@core/models/address.model';
 import { SelectedMeal } from '@core/models/cart.model';
 import { Customer } from '@core/models/customer.model';
 import { NotificationMessage, NotificationType } from '@core/models/notificationMessage.model';
 import { Payment } from '@core/models/payment.model';
+import { AddressService } from '@core/services/address.service';
 import { CartService } from '@core/services/cart.service';
 import { CustomerService } from '@core/services/customer.service';
 import { NotificationService } from '@core/services/notification.service';
@@ -22,14 +24,17 @@ export class CheckOutComponent implements OnInit {
   private _customer: Customer;
   selectedMeals: SelectedMeal[];
   form: FormGroup;
-  isLogging = false;
+  isCheckingOut = false;
+  isGettingAddress = false;
 
   constructor(
+    private _addressService: AddressService,
     private _cartService: CartService,
     private _customerService: CustomerService, 
     private _orderService: OrderService,
     private _notificationService: NotificationService,
-    private _router: Router
+    private _router: Router,
+    private _titleService: Title
   ) {}
 
   ngOnInit(): void {
@@ -39,6 +44,8 @@ export class CheckOutComponent implements OnInit {
       this._customer = customer;
       this.initForm();
     });
+
+    this._titleService.setTitle("Checkout");
   }
 
   initForm(): void{
@@ -47,7 +54,7 @@ export class CheckOutComponent implements OnInit {
     
     this.form = new FormGroup({
       address: new FormGroup({
-        postalCode: new FormControl(address.postalCode, [Validators.required, Validators.minLength(5), Validators.maxLength(10)]), 
+        postalCode: new FormControl(address.postalCode, [Validators.required, Validators.minLength(5), Validators.maxLength(5)]), 
         country: new FormControl(address.country, [Validators.required]),
         state: new FormControl(address.state, [Validators.required]),
         city: new FormControl(address.city, [Validators.required]),
@@ -56,10 +63,10 @@ export class CheckOutComponent implements OnInit {
       }),        
       payment: new FormGroup({
         name: new FormControl(payment.name, [Validators.required]),
-        number: new FormControl(payment.number, [Validators.required, Validators.minLength(4), Validators.maxLength(12)]),
-        expirationDate: new FormControl(payment.expirationDate, [Validators.required]),
+        number: new FormControl(payment.number, [Validators.required, Validators.minLength(12), Validators.maxLength(12)]),
+        expirationDate: new FormControl(payment.expirationDate, [Validators.required, Validators.pattern(/^(1[0-2]|0[1-9])(2[1-9])$/)]),
         securityCode: new FormControl(payment.securityCode, [Validators.required, Validators.minLength(3), Validators.maxLength(3)]),
-        postalCode: new FormControl(payment.postalCode, [Validators.required, Validators.minLength(5), Validators.maxLength(10)]),
+        postalCode: new FormControl(payment.postalCode, [Validators.required, Validators.minLength(5), Validators.maxLength(5)]),
         country: new FormControl(payment.country, [Validators.required])
       })
     });
@@ -67,7 +74,7 @@ export class CheckOutComponent implements OnInit {
 
   finishOrder(): void{
     if(this.form.valid){
-      this.isLogging = true;
+      this.isCheckingOut = true;
       let address = this.form.value["address"];     
       let payment = this.form.value["payment"];
       
@@ -75,21 +82,37 @@ export class CheckOutComponent implements OnInit {
         () => {
           this._router.navigate(["/customer", "orders"]);
           this._notificationService.sendMessage(new NotificationMessage("Order complete successfully! Thanks for your request!", NotificationType.success));
-          this.isLogging = false;
+          this.isCheckingOut = false;
         }, 
         error => {
           this._notificationService.sendMessage(new NotificationMessage(error, NotificationType.error));
-          this.isLogging = false;
+          this.isCheckingOut = false;
         }
       );
     }
   }
 
   getTotal(): number{
-    var total = 0;
-    this.selectedMeals.forEach(selectedMeal => total += selectedMeal.meal.price * selectedMeal.amount)
-
-    return total;
+    return this._cartService.getTotal();
   }
 
+  getAddress(): void{
+    let zipCode: string = this.form.get("address.postalCode").value;
+    this.isGettingAddress = true;
+    this._addressService.getAddressByZipCode(zipCode).subscribe((address: Address)=>{
+      if(address){
+        this.form.get('address.country').setValue(address.country);
+        this.form.get('address.state').setValue(address.state);
+        this.form.get('address.city').setValue(address.city);
+        this._notificationService.sendMessage(new NotificationMessage("Address Found!", NotificationType.info));
+      }else{
+        this._notificationService.sendMessage(new NotificationMessage("Address Not Found!", NotificationType.warning));
+      }
+      
+      this.isGettingAddress = false
+    }, error => {
+      this._notificationService.sendMessage(new NotificationMessage(error, NotificationType.error));
+      this.isGettingAddress = false;
+    });
+  }
 }

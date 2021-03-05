@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Title } from '@angular/platform-browser';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { CustomerSave } from '@core/models/customer.model';
 import { NotificationMessage, NotificationType } from '@core/models/notificationMessage.model';
@@ -12,7 +13,7 @@ import { NotificationService } from '@core/services/notification.service';
   styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent implements OnInit {
-
+  title = 'Register';
   redirectUrl = '';
   form: FormGroup;
   isLogging = false;
@@ -21,7 +22,8 @@ export class RegisterComponent implements OnInit {
     private _customerService: CustomerService,
     private _router: Router,
     private _route: ActivatedRoute,
-    private _notification: NotificationService
+    private _notification: NotificationService,
+    private _titleService: Title
   ) {}
 
   ngOnInit(): void {
@@ -31,12 +33,14 @@ export class RegisterComponent implements OnInit {
     });
 
     this.initForm();
+    this._titleService.setTitle("Register");
   }
 
   private initForm(): void{
     this.form = new FormGroup({
       email : new FormControl(null, [Validators.required, Validators.email]),
-      password: new FormControl(null, [Validators.required, Validators.minLength(4), Validators.maxLength(25)]),
+      password: new FormControl(null, [Validators.pattern(/^(?=.*[A-Z])(?=.*[!@#$&*])(?=.*[0-9])(?=.*[a-z]).{8,25}$/),
+      Validators.minLength(8),Validators.required, Validators.maxLength(25)]),
       name: new FormControl(null, [Validators.required, Validators.minLength(3), Validators.maxLength(50)])
     });
   }
@@ -53,9 +57,9 @@ export class RegisterComponent implements OnInit {
     );
 
     this._customerService.register(customer).subscribe(
-      result => {
+      () => {
         this._router.navigateByUrl("/" + this.redirectUrl.replace("+","/")); 
-        this._notification.sendMessage(new NotificationMessage("Logged successfully", NotificationType.success));
+        this._notification.sendMessage(new NotificationMessage("Registered successfully", NotificationType.success));
         this.isLogging = false;},
       error => {
         this._notification.sendMessage(new NotificationMessage(error, NotificationType.error));

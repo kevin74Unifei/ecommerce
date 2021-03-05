@@ -6,18 +6,18 @@
       style="cursor: pointer;"
       [routerLink]="['/meal', meal.id]" 
       routerLinkActive="router-link-active" 
-      class="card-img-top" 
+      class="card-img-top meal-details-link" 
       [src]="getImage(meal.id, meal.images[0])" 
       [alt]="meal.name">
     <div class="card-body text-center">  
         <h4
           style="cursor: pointer;" 
           [routerLink]="['/meal', meal.id]" routerLinkActive="router-link-active" 
-          class="card-title">
+          class="card-title meal-details-link">
           <a>{{meal.name}}</a>
           <a class="float-right text-success">{{meal.price | currency}}</a>
         </h4>  
-        <button class="btn amber darken-1" (click)="addToCart()">
+        <button class="btn amber darken-1 add-meal" (click)="addToCart()">
           <i class="fas fa-shopping-cart mr-1"></i>
           Add to cart</button>    
     </div>

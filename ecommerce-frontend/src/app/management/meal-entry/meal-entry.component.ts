@@ -1,7 +1,9 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Meal } from '@core/models/meal.model';
+import { NotificationMessage, NotificationType } from '@core/models/notificationMessage.model';
 import { MealService } from '@core/services/meal.service';
+import { NotificationService } from '@core/services/notification.service';
 
 @Component({
   selector: 'app-meal-entry',
@@ -25,17 +27,16 @@ export class MealEntryComponent implements OnInit {
   label3: ElementRef;
 
   constructor(
-    private mealService: MealService
+    private _mealService: MealService, 
+    private _notificationService: NotificationService
   ) {}
 
   ngOnInit(): void {
     this.form = new FormGroup({
       'id': new FormControl('', [Validators.required, Validators.min(0)]),
       'name': new FormControl('', [Validators.required, Validators.minLength(0), Validators.maxLength(100)]),
-      'category': new FormControl('', [Validators.required, Validators.min(0)]),
       'amount': new FormControl('', [Validators.required, Validators.min(0)]),
       'price': new FormControl('', [Validators.required, Validators.min(0)]),
-      'promotionPrice': new FormControl('', [Validators.required, Validators.min(0)]),
       'daysToExpire': new FormControl('', [Validators.required, Validators.min(0)]),
       'description': new FormControl('', [Validators.required, Validators.maxLength(500)]),
       'instructions': new FormArray([]),
@@ -76,7 +77,7 @@ export class MealEntryComponent implements OnInit {
 
     var meal:Meal = new Meal(
       this.form.value['id'],
-      this.form.value['category'],
+      1,
       this.form.value['name'], 
       this.form.value['amount'],
       this.form.value['price'],
@@ -84,10 +85,10 @@ export class MealEntryComponent implements OnInit {
       this.form.value['description'],
       null);
 
-    this.mealService.saveMeal(meal, images).subscribe((result) => {
-      console.log(result);
+    this._mealService.saveMeal(meal, images).subscribe(() => {
+      this._notificationService.sendMessage(new NotificationMessage('Meal inserted', NotificationType.success));
     }, error => {
-      console.log(error);
+      this._notificationService.sendMessage(new NotificationMessage(error, NotificationType.error));
     });
   }
 }

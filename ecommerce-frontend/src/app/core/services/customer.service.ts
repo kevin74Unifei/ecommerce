@@ -6,7 +6,7 @@ import { CustomerSave, CustomerLogin, Customer, CustomerGetProfile } from '@core
 import { Payment } from '@core/models/payment.model';
 import { environment } from '@env';
 import { BehaviorSubject, throwError } from 'rxjs';
-import { catchError, exhaustMap, switchMap, tap } from 'rxjs/operators';
+import { catchError, tap } from 'rxjs/operators';
 
 export interface AuthResponseData{
   id: number,
@@ -53,18 +53,17 @@ export class CustomerService {
       expirationDate
     );
   
-    localStorage.setItem('customerData', JSON.stringify(customer));
+    localStorage.setItem(environment.localStorageCustomer, JSON.stringify(customer));
+    
     customer.address = address;
     customer.password = password;
     customer.payment = payment;
-    this.customer.next(customer);
 
-    this.setLogoutTimer(expiresIn);
-    
+    this.customer.next(customer);
+    this.setLogoutTimer(expiresIn);    
   }
   
   private setLogoutTimer(expirationDuration: number){
-
     this._tokenExpirationTimer = setTimeout(()=>{
       this.logout();
     }, expirationDuration);
@@ -78,7 +77,7 @@ export class CustomerService {
       email: string,
       _token: string, 
       _tokenExpirationDate: string
-    } = JSON.parse(localStorage.getItem("customerData"));
+    } = JSON.parse(localStorage.getItem(environment.localStorageCustomer));
     
     if(!customerData)
       return; 
@@ -88,13 +87,12 @@ export class CustomerService {
       this.customer.next(loaddedCustomer);
       const expirationDuration = new Date(customerData._tokenExpirationDate).getTime() - new Date().getTime();
       this.setLogoutTimer(expirationDuration);
-    }
-    
+    }    
   }
 
   logout(){
     this.customer.next(null);
-    localStorage.removeItem('customerData');
+    localStorage.removeItem(environment.localStorageCustomer);
     this._router.navigate(['/']);
 
     if(this._tokenExpirationTimer)
@@ -104,26 +102,26 @@ export class CustomerService {
   }
 
   login(customer: CustomerLogin){
-    return this._http.post(environment.apiUrl + environment.user + "/login", customer)
+    return this._http.post(`${environment.ecommerceUrl}/${environment.customer}/login`, customer)
       .pipe(        
         catchError(this.handleError),
         tap((response: AuthResponseData) => this.handleAuthentication(response.id, response.email, response.name, response.token, response.expiresIn, null, null, null)));
   }
 
   register(customer: CustomerSave){
-    return this._http.post(environment.apiUrl + environment.user + "/register", customer)
+    return this._http.post(`${environment.ecommerceUrl}/${environment.customer}/register`, customer)
       .pipe(
         catchError(this.handleError),
         tap((response: AuthResponseData) => this.handleAuthentication(response.id, response.email, response.name, response.token, response.expiresIn, null, null, null)));
   }
 
   save(customer: CustomerSave){
-    return this._http.post(environment.apiUrl + environment.user, customer)
+    return this._http.post(`${environment.ecommerceUrl}/${environment.customer}`, customer)
       .pipe(catchError(this.handleError));
   }
 
   getProfile(){
-    return this._http.post(environment.apiUrl + environment.user + "/get", 
+    return this._http.post(`${environment.ecommerceUrl}/${environment.customer}/get`, 
       new CustomerGetProfile(this.customer.value.email, this.customer.value.id))
       .pipe(
         catchError(this.handleError),

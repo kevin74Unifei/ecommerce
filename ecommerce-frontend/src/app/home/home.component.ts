@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
+import { Meal } from '@core/models/meal.model';
+import { NotificationMessage, NotificationType } from '@core/models/notificationMessage.model';
+import { MealService } from '@core/services/meal.service';
+import { NotificationService } from '@core/services/notification.service';
 
 @Component({
   selector: 'app-home',
@@ -7,9 +12,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
-  constructor() { }
+  meals: Meal[] = [];
+
+  constructor(
+    private mealService: MealService,
+    private _notificationService: NotificationService,
+    private _titleService: Title
+  ) { }
 
   ngOnInit(): void {
+    this.mealService.getMeals().subscribe((meals:Meal[]) => {
+      this.meals = meals;
+    }, error => {
+      this._notificationService.sendMessage(new NotificationMessage(error, NotificationType.error));
+    });
+
+    this._titleService.setTitle("Ecommerce")
   }
 
 }

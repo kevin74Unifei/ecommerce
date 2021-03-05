@@ -15,28 +15,35 @@
                         </h4>
                         <hr>
                         <div class="row" formGroupName="address">
-                            <div class="col-12 col-md-4">
+                            <div class="col-5">
                                 <div class="md-form">
-                                    <input mdbInput mdbValidate formControlName="postalCode" type="text" class="form-control" id="postalCode">
+                                    <input mdbInput mdbValidate formControlName="postalCode" type="text" class="form-control" id="postalCode" mask="00000">
                                     <label for="postalCode">Postal Code</label>
-                                    <app-field-validation [field]="form.get('address.postalCode')" [errorMessage]="'Postal Code cannot be empty'"></app-field-validation>
+                                    <app-field-validation [field]="form.get('address.postalCode')" [errorMessage]="'Postal Code is not in the right format'"></app-field-validation>
                                 </div>
                             </div>
-                            <div class="col-12 col-md-8">
+                            <div class="col-7 text-center">
+                                <button *ngIf="!isGettingAddress; else loadingAddress" (click)="getAddress()" [disabled]="!form.get('address.postalCode').valid" type="button" class="btn btn-outline-warning">
+                                    <i class="fas fa-map left mr-1"> Check Zip</i></button>
+                                <ng-template #loadingAddress>
+                                    <app-loading-button></app-loading-button>
+                                </ng-template>
+                            </div>
+                            <div class="col-12 col-md-5">
                                 <div class="md-form">
                                     <input mdbInput mdbValidate formControlName="country" type="text" class="form-control" id="country">
                                     <label for="country">Country</label>
                                     <app-field-validation [field]="form.get('address.country')" [errorMessage]="'Country cannot be empty'"></app-field-validation>
                                 </div>
                             </div>                            
-                            <div class="col-12 col-md-4">
+                            <div class="col-12 col-md-7">
                                 <div class="md-form">
                                     <input mdbInput mdbValidate formControlName="state" type="text" class="form-control" id="state">
                                     <label for="state">State</label>
                                     <app-field-validation [field]="form.get('address.state')" [errorMessage]="'State cannot be empty'"></app-field-validation>
                                 </div>
                             </div>
-                            <div class="col-12 col-md-8">
+                            <div class="col-12 col-md-12">
                                 <div class="md-form">
                                     <input mdbInput mdbValidate formControlName="city" type="text" class="form-control" id="city">
                                     <label for="city">City</label>
@@ -71,9 +78,9 @@
                         <div class="row" formGroupName="payment">
                             <div class="col-12 col-md-4">
                                 <div class="md-form">
-                                    <input mdbInput mdbValidate formControlName="postalCode" type="text" class="form-control" id="paymentPostalCode">
+                                    <input mdbInput mdbValidate formControlName="postalCode" type="text" class="form-control" id="paymentPostalCode" mask="00000">
                                     <label for="paymentPostalCode">Postal Code</label>
-                                    <app-field-validation [field]="form.get('payment.postalCode')" [errorMessage]="'Postal Code cannot be empty'"></app-field-validation>
+                                    <app-field-validation [field]="form.get('payment.postalCode')" [errorMessage]="'Postal Code is not in the right format'"></app-field-validation>
                                 </div>
                             </div>
                             <div class="col-12 col-md-8">
@@ -92,23 +99,23 @@
                             </div>
                             <div class="col-12">
                                 <div class="md-form">
-                                    <input mdbInput mdbValidate formControlName="number" type="number" class="form-control" id="number">
+                                    <input mdbInput mdbValidate formControlName="number" type="text" class="form-control" id="number" mask="0000 0000 0000">
                                     <label for="number">Number</label>
-                                    <app-field-validation [field]="form.get('payment.number')" [errorMessage]="'Number cannot be empty'"></app-field-validation>
+                                    <app-field-validation [field]="form.get('payment.number')" [errorMessage]="'Number is not in the right format'"></app-field-validation>
                                 </div>
                             </div>
-                            <div class="col-6">
+                            <div class="col-12">
                                 <div class="md-form">
-                                    <input mdbInput mdbValidate formControlName="expirationDate" type="text" class="form-control" id="expirationDate">
+                                    <input mdbInput mdbValidate formControlName="expirationDate" type="text" class="form-control" id="expirationDate" mask="00/00">
                                     <label for="expirationDate">Expiration Date</label>
-                                    <app-field-validation [field]="form.get('payment.expirationDate')" [errorMessage]="'Expiration Date cannot be empty'"></app-field-validation>
+                                    <app-field-validation [field]="form.get('payment.expirationDate')" [errorMessage]="'Expiration Date is not in the right format'"></app-field-validation>
                                 </div>
                             </div>
-                            <div class="col-6">
+                            <div class="col-12">
                                 <div class="md-form">
-                                    <input mdbInput mdbValidate formControlName="securityCode" type="number" class="form-control" id="securityCode">
+                                    <input mdbInput mdbValidate formControlName="securityCode" type="text" class="form-control" id="securityCode" mask="000">
                                     <label for="securityCode">Security Code</label>
-                                    <app-field-validation [field]="form.get('payment.securityCode')" [errorMessage]="'Security Code cannot be empty'"></app-field-validation>
+                                    <app-field-validation [field]="form.get('payment.securityCode')" [errorMessage]="'Security Code is not in the right format'"></app-field-validation>
                                 </div>
                             </div>
                         </div>
@@ -116,19 +123,21 @@
                 </div>
             </div>
             <div class="col-12 col-md-4">
-                <div class="card z-depth-2">
+                <div class="card z-depth-2 order-summary">
                     <div class="card-body">
                         <h4 class="card-title">
                             <i class="fas fa-star mr-2"></i>
                             Order Summary
                         </h4>
                         <hr>
-                        <div class="row" *ngFor="let selectedMeal of selectedMeals">
-                            <div class="col-8">
-                                <p class="card-text">({{selectedMeal.amount}}) {{selectedMeal.meal.name}}</p>
-                            </div>
-                            <div class="col-4 text-right">
-                                <p class="card-text text-success">{{selectedMeal.meal.price * selectedMeal.amount | currency}}</p>
+                        <div class="meals overflow-auto">
+                            <div class="row" *ngFor="let selectedMeal of selectedMeals">
+                                <div class="col-8">
+                                    <p class="card-text">({{selectedMeal.amount}}) {{selectedMeal.meal.name}}</p>
+                                </div>
+                                <div class="col-4 text-right">
+                                    <p class="card-text text-success">{{selectedMeal.meal.price * selectedMeal.amount | currency}}</p>
+                                </div>
                             </div>
                         </div>
                         <div class="row">
@@ -157,7 +166,7 @@
                                 <h4 class="card-title font-weight-bold text-success">{{getTotal() | currency}}</h4>
                             </div>
                             <div class="col-12 text-center">
-                                <button *ngIf="!isLogging; else loading" [disabled]="!form.valid || selectedMeals.length == 0" class="btn amber darken-1"><i class="fas fa-check left mr-1"></i> Finish Order</button>
+                                <button id="order-btn" *ngIf="!isCheckingOut; else loading" [disabled]="!form.valid || selectedMeals.length == 0" class="btn amber darken-1"><i class="fas fa-check left mr-1"></i> Finish Order</button>
                                 <ng-template #loading>
                                     <app-loading-button></app-loading-button>
                                 </ng-template>
