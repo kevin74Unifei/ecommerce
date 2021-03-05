@@ -1,7 +1,7 @@
 <p align="center">
   <h3 align="center">Healthytos E-commerce</h3>
    <p align="center">
-    A minimalistic e-commerce focus on the customer experience
+    A minimalistic e-commerce focused on the customer experience
   </p>
 </p>
 
